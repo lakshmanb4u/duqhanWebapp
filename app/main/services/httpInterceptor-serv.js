@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-.factory('HttpInterceptor', function (BusyLoader, $q, $log, Config, $localStorage) {
+.factory('HttpInterceptor', function (BusyLoader, $q, $log, Config, $localStorage, $rootScope) {
 
   return {
     request: function (config) {
@@ -39,6 +39,11 @@ angular.module('main')
     responseError: function (err) {
       BusyLoader.hide();
       $log.log('Response error via interceptor');
+      $log.log('response==========================================================');
+      $log.log(err);
+      if (err.status === 401) {
+        $rootScope.$emit('Unauthorized');
+      }
       return $q.reject(err);
     }
   };

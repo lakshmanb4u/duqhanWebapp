@@ -165,4 +165,13 @@ angular.module('store')
   $rootScope.$on('$ionicView.beforeEnter', function (event, viewData) {
     viewData.enableBack = true;
   });
+
+  $rootScope.$on('Unauthorized', function () {
+    $state.go('landing');
+    var notification = {};
+    notification.type = 'failure';
+    notification.text = 'Your session has expired. Please login again.';
+    $rootScope.$emit('setUnauthorizedNotification', notification);
+  });
+
 });

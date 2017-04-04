@@ -1,68 +1,70 @@
 <ion-view view-title="Delivery">
   <!-- do you want padding? -->
   <ion-content class="padding has-footer checkout">
+    <div class="row responsive-lg">
+      <div class="col col-50 col-offset-25">
+        <h4 class="m-none">Delivery address</h4>
+        <ion-list>
+          <div class="card m-t-none">
+            <div class="item item-text-wrap" ng-show="ctrl.address">
+              <h2>{{ctrl.address.contactName}}</h2>
+              <p>{{ctrl.address.streetOne}}, {{ctrl.address.streetTwo}}, {{ctrl.address.city}}, {{ctrl.address.state}} - {{ctrl.address.zipCode}}</p>
+              <p>{{ctrl.address.phone}}</p>
+            </div>
+            <div>
+              <button class="button button-block button-stable m-none" ng-click="ctrl.changeAddress()">
+                <span ng-show="ctrl.address">Change address</span>
+                <span ng-hide="ctrl.address">Select address</span>
+              </button>                           
+            </div>
+          </div>
+        </ion-list>
 
-    <!-- content goes here -->
-    <h4 class="m-none">Delivery address</h4>
-    <ion-list>
-      <div class="card m-t-none">
-        <div class="item item-text-wrap" ng-show="ctrl.address">
-          <h2>{{ctrl.address.contactName}}</h2>
-          <p>{{ctrl.address.streetOne}}, {{ctrl.address.streetTwo}}, {{ctrl.address.city}}, {{ctrl.address.state}} - {{ctrl.address.zipCode}}</p>
-          <p>{{ctrl.address.phone}}</p>
+        <h4 class="m-b-md m-t-xs">Review products</h4>
+        <ion-list class="checkout-review-items">
+          <div class="item item-thumbnail-left item-text-wrap" ng-repeat="p in ctrl.cart.products">
+            <img src="{{p.imgurl || 'store/assets/images/default.jpg'}}">
+            <h2>{{p.name}}</h2>
+            <p>
+              <span ng-if="p.size">Size: {{p.size}}, </span>
+              <span ng-if="p.color">Color: {{p.color}}, </span>
+              <span>Qty: {{p.qty}}</span>
+            </p>
+            <h3>Rs.{{p.discountedPrice * p.qty}} <span class="discounted-price">Rs.{{p.price * p.qty}}</span> <span class="discount-percentage">{{p.discountPCT| number : 0}}% off</span></h3>
+            <p>Delivery: <span>Rs.{{p.shippingRate | number : 0}} ({{p.shippingTime}} days)</span></p>
+          </div>
+        </ion-list>
+
+        <h4 class="m-b-md m-t-xs">Price details</h4>
+        <div class="list summary">
+          <a class="item">
+            Total price ({{ctrl.cart.products.length}} items)
+            <span class="item-note">
+              Rs.{{ctrl.cart.orderTotal}}
+            </span>
+          </a>
+          <a class="item">
+            Delivery
+            <span class="item-note">
+              Rs.{{ctrl.cart.shippingTotal | number : 0}}
+            </span>
+          </a>
+          <a class="item">
+            Amount payble
+            <span class="item-note">
+              Rs.{{ctrl.cart.orderTotalWithShipping | number : 0}}
+            </span>
+          </a>
         </div>
-        <div>
-          <button class="button button-block button-stable m-none" ng-click="ctrl.changeAddress()">
-            <span ng-show="ctrl.address">Change address</span>
-            <span ng-hide="ctrl.address">Select address</span>
-          </button>                           
+
+        <div class="m-lg">
+          <!-- PayPal Logo -->
+          <img src="https://www.paypalobjects.com/webstatic/mktg/logo-center/Security_Banner_234x60_4a.gif" border="0" alt="PayPal Logo" width="100%">
+          <!-- PayPal Logo -->
         </div>
+        <div class="m-md"></div>
       </div>
-    </ion-list>
-
-    <h4 class="m-b-md m-t-xs">Review products</h4>
-    <ion-list class="checkout-review-items">
-      <div class="item item-thumbnail-left item-text-wrap" ng-repeat="p in ctrl.cart.products">
-        <img src="{{p.imgurl || 'store/assets/images/default.jpg'}}">
-        <h2>{{p.name}}</h2>
-        <p>
-          <span ng-if="p.size">Size: {{p.size}}, </span>
-          <span ng-if="p.color">Color: {{p.color}}, </span>
-          <span>Qty: {{p.qty}}</span>
-        </p>
-        <h3>Rs.{{p.discountedPrice * p.qty}} <span class="discounted-price">Rs.{{p.price * p.qty}}</span> <span class="discount-percentage">{{p.discountPCT| number : 0}}% off</span></h3>
-        <p>Delivery: <span>Rs.{{p.shippingRate | number : 0}} ({{p.shippingTime}} days)</span></p>
-      </div>
-    </ion-list>
-
-    <h4 class="m-b-md m-t-xs">Price details</h4>
-    <div class="list summary">
-      <a class="item">
-        Total price ({{ctrl.cart.products.length}} items)
-        <span class="item-note">
-          Rs.{{ctrl.cart.orderTotal}}
-        </span>
-      </a>
-      <a class="item">
-        Delivery
-        <span class="item-note">
-          Rs.{{ctrl.cart.shippingTotal | number : 0}}
-        </span>
-      </a>
-      <a class="item">
-        Amount payble
-        <span class="item-note">
-          Rs.{{ctrl.cart.orderTotalWithShipping | number : 0}}
-        </span>
-      </a>
     </div>
-
-    <div class="m-lg">
-      <!-- PayPal Logo -->
-      <img src="https://www.paypalobjects.com/webstatic/mktg/logo-center/Security_Banner_234x60_4a.gif" border="0" alt="PayPal Logo" width="100%">
-      <!-- PayPal Logo -->
-    </div>
-    <div class="m-md"></div>
   </ion-content>
   <ion-footer-bar class="cart-footer">
     <div class="row m-none p-none">

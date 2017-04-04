@@ -10,6 +10,7 @@ angular.module('main')
   $ionicFacebookAuth,
   $ionicUser,
   $cordovaGeolocation,
+  $timeout,
   Config,
   Auth,
   BusyLoader,
@@ -107,6 +108,7 @@ angular.module('main')
     BusyLoader.show();
     $log.log('facebookLogin');
     var img = null;
+    var fbUser = {};
     var posOptions = {timeout: 1000, enableHighAccuracy: false};
     $cordovaGeolocation.getCurrentPosition(posOptions)
     .then(function (position) {
@@ -114,24 +116,25 @@ angular.module('main')
       $log.log(position);
       Config.ENV.USER.LATITUDE = position.coords.latitude;
       Config.ENV.USER.LONGITUDE = position.coords.longitude;
-      return $ionicFacebookAuth.login();
+      // return $ionicFacebookAuth.login();
+      return Auth.facebookLogin();
     },
     function (err) {
       $log.log('Geolocation error = ');
       $log.log(err);
-      return $ionicFacebookAuth.login();
+      // return $ionicFacebookAuth.login();
+      return Auth.facebookLogin();
     })
-    .then(function () {
+    .then(function (facebook) {
       $log.log('FB data ================');
-      $log.log($ionicUser.social.facebook);
-      var fbUser = {};
-      fbUser.email = $ionicUser.social.facebook.data.email;
-      fbUser.name = $ionicUser.social.facebook.data.full_name;
-      fbUser.fbid = $ionicUser.social.facebook.uid;
+      // $log.log($ionicUser.social.facebook);
+      fbUser.email = facebook.email;
+      fbUser.name = facebook.displayName;
+      fbUser.fbid = facebook.providerId;
       fbUser.latitude = Config.ENV.USER.LATITUDE;
       fbUser.longitude = Config.ENV.USER.LONGITUDE;
       fbUser.userAgent = ionic.Platform.ua;
-      img = $ionicUser.social.facebook.data.profile_picture;
+      img = facebook.photoURL;
       $log.log('FB picture ================');
       $log.log(img);
       return Firebase.includeFCMToken(fbUser);
@@ -142,9 +145,9 @@ angular.module('main')
     .then(function (response) {
       $log.log('FB response =====================');
       $log.log(response);
-      ctrl.savedUser.email = $ionicUser.social.facebook.data.email;
-      ctrl.savedUser.name = $ionicUser.social.facebook.data.full_name;
-      ctrl.savedUser.userId = $ionicUser.social.facebook.userId;
+      ctrl.savedUser.email = fbUser.email;
+      ctrl.savedUser.name = fbUser.name;
+      ctrl.savedUser.userId = fbUser.fbid;
       ctrl.savedUser.authtoken = response.data.authtoken;
       ctrl.savedUser.profileImage = img;
       ctrl.savedUser.socialLogin = true;
@@ -179,23 +182,23 @@ angular.module('main')
     $log.log(parsedUser);
 
     if (parsedUser.socialLogin) {
-      if ($ionicAuth.isAuthenticated()) {
-        var fbUser = {};
-        fbUser.email = $ionicUser.social.facebook.data.email;
-        fbUser.name = $ionicUser.social.facebook.data.full_name;
-        fbUser.fbid = $ionicUser.social.facebook.uid;
-        var img = $ionicUser.social.facebook.data.profile_picture;
-        $log.log('FB picture ================');
-        $log.log(img);
+      var fbUser = {};
+      var img = null;
+      Auth.isLoggedIn()
+      .then(function (response) {
+        fbUser.email = response.email;
+        fbUser.name = response.displayName;
+        fbUser.fbid = response.providerId;
+        img = response.photoURL;
         Firebase.includeFCMToken(fbUser)
         .then(function (fbUser) {
           return Auth.fbLogin(fbUser);
         })
         .then(function (response) {
           $log.log(response);
-          ctrl.savedUser.email = $ionicUser.social.facebook.data.email;
-          ctrl.savedUser.name = $ionicUser.social.facebook.data.full_name;
-          ctrl.savedUser.userId = $ionicUser.social.facebook.userId;
+          ctrl.savedUser.email = fbUser.email;
+          ctrl.savedUser.name = fbUser.name;
+          ctrl.savedUser.userId = fbUser.fbid;
           ctrl.savedUser.profileImage = img;
           ctrl.savedUser.authtoken = response.data.authtoken;
           ctrl.savedUser.socialLogin = true;
@@ -215,9 +218,11 @@ angular.module('main')
           BusyLoader.hide();
           $state.go('landing');
         });
-      } else {
+      })
+      .catch(function (error) {
+        $log.log(error);
         ctrl.internalFacebookLogin();
-      }
+      });
     } else {
       var user = {};
       user.email = parsedUser.email;
@@ -239,5 +244,20 @@ angular.module('main')
     $log.log(event);
     $log.log('on internalFacebookLogin');
     ctrl.internalFacebookLogin();
+  });
+
+  ctrl.notification = {};
+
+  ctrl.setNotification = function (notification) {
+    ctrl.notification.type = notification.type;
+    ctrl.notification.text = notification.text;
+    $timeout(function () {
+      ctrl.notification = {};
+    }, 5000);
+  };
+
+  $rootScope.$on('setUnauthorizedNotification', function (event, notification) {
+    $log.log(event);
+    ctrl.setNotification(notification);
   });
 });

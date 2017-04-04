@@ -5,9 +5,10 @@ angular.module('auth', [
   'ui.router',
   'ngMessages'
 ])
-.config(function ($stateProvider) {
+.config(function ($locationProvider, $stateProvider) {
 
   // ROUTING with ui.router
+  // $locationProvider.html5Mode(true);
   $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
     .state('landing', {
@@ -35,6 +36,11 @@ angular.module('auth', [
       templateUrl: 'auth/templates/change-password.html',
       controller: 'ForgotPasswordCtrl as ctrl'
     });
+})
+.config(function ($cordovaFacebookProvider) {
+  var appID = 698576100317336;
+  var version = 'v2.8'; // or leave blank and default is v2.0
+  $cordovaFacebookProvider.browserInit(appID, version);
 })
 .config(function ($httpProvider) {
   //Enable cross domain calls

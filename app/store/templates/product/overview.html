@@ -3,67 +3,73 @@
   <ion-content class="product-tab-content has-footer has-tabs">
 
     <!-- content goes here -->
-    <ion-slide-box delegate-handle="image-viewer" show-pager="true" class="m-t-md">
-        <ion-slide ng-repeat="i in ctrl.product.images">
+    <div class="row responsive-lg">
+      <div class="col-40 col-offset-10">
+        <div class="product-brief p-sm">
+          <h1 class="product-name">{{ctrl.product.name}}</h1>
+          <p class="product-price m-b-none"><span>Rs.{{ctrl.product.orginalPrice}}</span> Rs.{{ctrl.product.salesPrice}}</p>
+        </div>
+        <div class="product-detail p-sm">
+          <div class="size-wrapper m-b-md" ng-show="ctrl.product.description">
+            <div class="values">Description</div>
+            <div class="">{{ctrl.product.description}}</div>
+          </div>
+          <div class="size-wrapper m-b-md" ng-show="ctrl.product.specifications">
+            <!--<div class="values">Specification</div>-->
+            <ion-list class="product-specification">
+              <ion-item class="item-divider">
+                Specification
+              </ion-item>
+              <ion-item ng-repeat="(key, value) in ctrl.product.specifications">
+                {{key}}
+                <span class="item-note">{{value}}</span>
+              </ion-item>
+            </ion-list>
+            <!--<div class="row m-b-xs" ng-repeat="(key, value) in ctrl.product.specifications">
+                <div class="col title">{{key}}</div>
+                <div class="col text-capitalize">{{value}}</div>
+                </div>-->
+          </div>
+          <div class="size-wrapper m-b-md" ng-show="ctrl.product.sizeArr">
+            <div class="row m-b-xs">
+              <div class="col title">Sizes</div>
+              <!-- <div class="col link text-right" ui-sref="store.sizes">Size chart</div> -->
+            </div>
+            <div class="values">{{ctrl.product.sizeArr}}</div>
+          </div>
+          <div class="color-wrapper m-b-md" ng-show="ctrl.product.colorArr">
+            <div class="row m-b-xs">
+              <div class="col title">Colors</div>
+            </div>
+            <div class="values">{{ctrl.product.colorArr}}</div>
+          </div>
+          <div class="shipping-time-wrapper m-b-md">
+            <div class="row m-b-xs">
+              <div class="col title">Estimated Arrival</div>
+              <!-- <div class="col link text-right" ui-sref="store.shipping">Details</div> -->
+            </div>
+            <div class="values">3-4 Weeks</div>
+          </div>
+          <div class="shipping-cost-wrapper m-b-md hidden">
+            <div class="row m-b-xs">
+              <div class="col title">Estimated Shipping</div>
+              <!-- <div class="col link text-right" ui-sref="store.shipping">Details</div> -->
+            </div>
+            <div class="values">Rs. 0</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-40">
+        <ion-slide-box delegate-handle="image-viewer" show-pager="true" class="m-t-md">
+          <ion-slide ng-repeat="i in ctrl.product.images">
             <img src="{{i.imgUrl || 'store/assets/images/default.jpg' | cloudinaryImageTransformation}}">
-        </ion-slide>
-    </ion-slide-box>
-    <div class="product-brief p-sm">
-      <h1 class="product-name">{{ctrl.product.name}}</h1>
-      <p class="product-price m-b-none"><span>Rs.{{ctrl.product.orginalPrice}}</span> Rs.{{ctrl.product.salesPrice}}</p>
-    </div>
-    <div class="product-detail p-sm">
-      <div class="size-wrapper m-b-md" ng-show="ctrl.product.description">
-        <div class="values">Description</div>
-        <div class="">{{ctrl.product.description}}</div>
-      </div>
-      <div class="size-wrapper m-b-md" ng-show="ctrl.product.specifications">
-        <!--<div class="values">Specification</div>-->
-        <ion-list class="product-specification">
-          <ion-item class="item-divider">
-            Specification
-          </ion-item>
-          <ion-item ng-repeat="(key, value) in ctrl.product.specifications">
-            {{key}}
-            <span class="item-note">{{value}}</span>
-          </ion-item>
-        </ion-list>
-        <!--<div class="row m-b-xs" ng-repeat="(key, value) in ctrl.product.specifications">
-          <div class="col title">{{key}}</div>
-          <div class="col text-capitalize">{{value}}</div>
-        </div>-->
-      </div>
-      <div class="size-wrapper m-b-md" ng-show="ctrl.product.sizeArr">
-        <div class="row m-b-xs">
-          <div class="col title">Sizes</div>
-          <!-- <div class="col link text-right" ui-sref="store.sizes">Size chart</div> -->
+          </ion-slide>
+        </ion-slide-box>
+        <div class="duqhan-guarantee">
+          <div class="stamp-wraper">
+            <p>We guarantee a safe and secure shopping experience so you never have to worry.</p>
+          </div>
         </div>
-        <div class="values">{{ctrl.product.sizeArr}}</div>
-      </div>
-      <div class="color-wrapper m-b-md" ng-show="ctrl.product.colorArr">
-        <div class="row m-b-xs">
-          <div class="col title">Colors</div>
-        </div>
-        <div class="values">{{ctrl.product.colorArr}}</div>
-      </div>
-      <div class="shipping-time-wrapper m-b-md">
-        <div class="row m-b-xs">
-          <div class="col title">Estimated Arrival</div>
-          <!-- <div class="col link text-right" ui-sref="store.shipping">Details</div> -->
-        </div>
-        <div class="values">3-4 Weeks</div>
-      </div>
-      <div class="shipping-cost-wrapper m-b-md hidden">
-        <div class="row m-b-xs">
-          <div class="col title">Estimated Shipping</div>
-          <!-- <div class="col link text-right" ui-sref="store.shipping">Details</div> -->
-        </div>
-        <div class="values">Rs. 0</div>
-      </div>
-    </div>
-    <div class="duqhan-guarantee">
-      <div class="stamp-wraper">
-        <p>We guarantee a safe and secure shopping experience so you never have to worry.</p>
       </div>
     </div>
   </ion-content>

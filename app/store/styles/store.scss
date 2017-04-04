@@ -79,6 +79,13 @@ $assertive:                       #ef473a !default;
   }
 }
 
+.landing {
+  .notification{
+    top: 0;
+    text-align: center;
+  }
+}
+
 
 // Products Page and Product Page
 // -------------------------------
@@ -212,10 +219,12 @@ $assertive:                       #ef473a !default;
 }
 
 .add-to-bag {
-  height: 200px;
-  bottom: 0;
+  bottom: 40%;
   min-height: 200px;
   top: inherit;
+  width: 40%;
+  left: 30%;
+  right: 30%;
 }
 
 

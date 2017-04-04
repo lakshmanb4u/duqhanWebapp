@@ -10,8 +10,8 @@
       </div>
       <!-- <div class="row p-l-n p-r-n products-row" masonry item-selector=".m-product" load-images="false" >
         <div class="col col-50 m-product" ng-repeat="p in ctrl.products" masonry-brick> -->
-      <div class="row p-l-n p-r-n products-row">
-        <div class="col col-50 m-product" ng-repeat="p in ctrl.products">
+      <div class="row p-l-n p-r-n products-row responsive-lg">
+        <div class="col col-20 m-product" ng-repeat="p in ctrl.products">
           <div class="product-preview" ui-sref="store.product.overview({productId: p.productId})">
             <span class="discount">{{p.discountPCT| number : 0}}%</span>
             <div class="item-image">
