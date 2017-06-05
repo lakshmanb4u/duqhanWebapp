@@ -6,7 +6,7 @@ angular.module('main')
   ENV: {
     /*inject-env*/
     'SERVER_URL': 'http://duqhan.us-west-2.elasticbeanstalk.com/',
-    'SOME_OTHER_URL': 'http://localhost:8084/',
+    'SOME_OTHER_URL': 'https://echo.getpostman.com/',
     'USER': {
       'AUTH_TOKEN': null,
       'NAME': '',
@@ -20,7 +20,7 @@ angular.module('main')
       'API_KEY': '211572778157664',
       'API_SECRET': 'BjqvouftX41P4NHFbAEPFaBWFog'
     },
-    'PRODUCTS_PER_PAGE': 20
+    'PRODUCTS_PER_PAGE': 50
     /*endinject*/
   },
 

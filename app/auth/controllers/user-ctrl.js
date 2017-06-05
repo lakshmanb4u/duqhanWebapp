@@ -9,7 +9,7 @@ angular.module('main')
   $ionicAuth,
   $ionicFacebookAuth,
   $ionicUser,
-  $cordovaGeolocation,
+  // $cordovaGeolocation,
   $timeout,
   Config,
   Auth,
@@ -36,42 +36,46 @@ angular.module('main')
 
   ctrl.loggingUser = {};
 
-  var posOptions = {timeout: 1000, enableHighAccuracy: false};
-  $cordovaGeolocation
-  .getCurrentPosition(posOptions)
-  .then(function (position) {
-    $log.log('Geolocation = ');
-    $log.log(position);
-    Config.ENV.USER.LATITUDE = position.coords.latitude;
-    Config.ENV.USER.LONGITUDE = position.coords.longitude;
-  },
-  function (err) {
-    $log.log('Geolocation error = ');
-    $log.log(err);
-  });
+  // var posOptions = {timeout: 1000, enableHighAccuracy: false};
+  // $cordovaGeolocation
+  // .getCurrentPosition(posOptions)
+  // .then(function (position) {
+  //   $log.log('Geolocation = ');
+  //   $log.log(position);
+  //   Config.ENV.USER.LATITUDE = position.coords.latitude;
+  //   Config.ENV.USER.LONGITUDE = position.coords.longitude;
+  // },
+  // function (err) {
+  //   $log.log('Geolocation error = ');
+  //   $log.log(err);
+  // });
 
   ctrl.internalLogin = function (user) {
     BusyLoader.show();
-    var posOptions = {timeout: 1000, enableHighAccuracy: false};
-    $cordovaGeolocation.getCurrentPosition(posOptions)
-    .then(function (position) {
-      $log.log('Geolocation = ');
-      $log.log(position);
-      Config.ENV.USER.LATITUDE = position.coords.latitude;
-      Config.ENV.USER.LONGITUDE = position.coords.longitude;
-      user.latitude = Config.ENV.USER.LATITUDE;
-      user.longitude = Config.ENV.USER.LONGITUDE;
-      user.userAgent = ionic.Platform.ua;
-      return Firebase.includeFCMToken(user);
-    },
-    function (err) {
-      $log.log('Geolocation error = ');
-      $log.log(err);
-      user.latitude = Config.ENV.USER.LATITUDE;
-      user.longitude = Config.ENV.USER.LONGITUDE;
-      user.userAgent = ionic.Platform.ua;
-      return Firebase.includeFCMToken(user);
-    })
+    // var posOptions = {timeout: 1000, enableHighAccuracy: false};
+    // $cordovaGeolocation.getCurrentPosition(posOptions)
+    // .then(function (position) {
+    //   $log.log('Geolocation = ');
+    //   $log.log(position);
+    //   Config.ENV.USER.LATITUDE = position.coords.latitude;
+    //   Config.ENV.USER.LONGITUDE = position.coords.longitude;
+    //   user.latitude = Config.ENV.USER.LATITUDE;
+    //   user.longitude = Config.ENV.USER.LONGITUDE;
+    //   user.userAgent = ionic.Platform.ua;
+    //   return Firebase.includeFCMToken(user);
+    // },
+    // function (err) {
+    //   $log.log('Geolocation error = ');
+    //   $log.log(err);
+    //   user.latitude = Config.ENV.USER.LATITUDE;
+    //   user.longitude = Config.ENV.USER.LONGITUDE;
+    //   user.userAgent = ionic.Platform.ua;
+    //   return Firebase.includeFCMToken(user);
+    // });
+    user.latitude = Config.ENV.USER.LATITUDE;
+    user.longitude = Config.ENV.USER.LONGITUDE;
+    user.userAgent = ionic.Platform.ua;
+    Firebase.includeFCMToken(user)
     .then(function (user) {
       return Auth.login(user);
     })
@@ -94,7 +98,7 @@ angular.module('main')
     .catch(function (response) {
       $log.log(response);
       $localStorage.$reset();
-      if (response.data.statusCode === '403') {
+      if (response.data && response.data.statusCode === '403') {
         ctrl.responseCB = 'Invalid credential.';
       } else {
         ctrl.responseCB = 'Something went wrong. Please try again.';
@@ -109,22 +113,23 @@ angular.module('main')
     $log.log('facebookLogin');
     var img = null;
     var fbUser = {};
-    var posOptions = {timeout: 1000, enableHighAccuracy: false};
-    $cordovaGeolocation.getCurrentPosition(posOptions)
-    .then(function (position) {
-      $log.log('Geolocation = ');
-      $log.log(position);
-      Config.ENV.USER.LATITUDE = position.coords.latitude;
-      Config.ENV.USER.LONGITUDE = position.coords.longitude;
-      // return $ionicFacebookAuth.login();
-      return Auth.facebookLogin();
-    },
-    function (err) {
-      $log.log('Geolocation error = ');
-      $log.log(err);
-      // return $ionicFacebookAuth.login();
-      return Auth.facebookLogin();
-    })
+    // var posOptions = {timeout: 1000, enableHighAccuracy: false};
+    // $cordovaGeolocation.getCurrentPosition(posOptions)
+    // .then(function (position) {
+    //   $log.log('Geolocation = ');
+    //   $log.log(position);
+    //   Config.ENV.USER.LATITUDE = position.coords.latitude;
+    //   Config.ENV.USER.LONGITUDE = position.coords.longitude;
+    //   // return $ionicFacebookAuth.login();
+    //   // return Auth.facebookLogin();
+    // },
+    // function (err) {
+    //   $log.log('Geolocation error = ');
+    //   $log.log(err);
+    //   // return $ionicFacebookAuth.login();
+    //   // return Auth.facebookLogin();
+    // });
+    Auth.facebookLogin()
     .then(function (facebook) {
       $log.log('FB data ================');
       // $log.log($ionicUser.social.facebook);
