@@ -1,6 +1,7 @@
 <ion-view view-title="Duqhan">
   <!-- do you want padding? -->
-  <ion-content class="padding landing">
+  <ion-content class="padding landing has-footer">
+    <div class="notification animated bounceInDown" ng-show="ctrl.notification.type" ng-class="{'success': ctrl.notification.type == 'success' , 'failure': ctrl.notification.type == 'failure'}">{{ctrl.notification.text}}</div>
 
     <!-- content goes here -->
     <ion-list class="list-inset">
@@ -28,4 +29,5 @@
     </ion-list>
 
   </ion-content>
+  <div ng-include="'auth/templates/footer.html'"></div>
 </ion-view>

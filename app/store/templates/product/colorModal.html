@@ -1,0 +1,10 @@
+<ion-modal-view class="add-to-bag">
+  <ion-header-bar style="background-color: #ff6803;color: white;">
+    <h1 class="title" style="color: white;">Select color</h1>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <div class="button-bar bar-stable m-t-xs" ng-repeat="name in ctrl.colorName track by $index">
+      <a class="button text-capitalize" ng-click="ctrl.colorSelected($index)">{{name.colorText}}</a>
+    </div>
+  </ion-content>
+</ion-modal-view>
