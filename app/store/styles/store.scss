@@ -551,3 +551,11 @@ $assertive: #ef473a !default;
     }
   }
 }
+
+.bar {
+  .title {
+    &.title-left {
+      text-transform: uppercase;
+    }
+  }
+}

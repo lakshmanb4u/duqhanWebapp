@@ -1,6 +1,6 @@
 <ion-view view-title="Sign in">
   <!-- do you want padding? -->
-  <ion-content class="padding authenticate">
+  <ion-content class="padding authenticate has-footer">
 
     <!-- content goes here -->
     <div class="row responsive-lg">
@@ -12,7 +12,7 @@
               <p class="logo-text">Duqhan</p>
             </div>
           </ion-item>
-          
+
           <ion-item class="item item-button">
             <button class="button icon-left ion-social-facebook button-block button-facebook" ng-click="ctrl.facebookLogin()">
               Login with Facebook
@@ -69,15 +69,14 @@
       </div>
     </div>
   </ion-content>
+  <div ng-include="'auth/templates/footer.html'"></div>
 </ion-view>
 
-<script id="error-list.html" type="text/ng-template">  
+<script id="error-list.html" type="text/ng-template">
   <div class="error" ng-message="required">
-    <i class="ion-information-circled"></i> 
-    This field is required!
+    <i class="ion-information-circled"></i> This field is required!
   </div>
   <div class="error" ng-message="email">
-    <i class="ion-information-circled"></i> 
-    This is not a valid email!
+    <i class="ion-information-circled"></i> This is not a valid email!
   </div>
 </script>

@@ -11,7 +11,9 @@ angular
     $scope,
     $rootScope,
     $timeout,
-    Store
+    $ionicPopup,
+    Store,
+    BusyLoader
   ) {
     /* Storing contextual this in a variable for easy access */
 
@@ -34,6 +36,7 @@ angular
 
     ctrl.loadProductDetail = function (productId) {
       var productParam = { productId: productId };
+      BusyLoader.show();
       Store.getProductDetail(productParam)
         .then(function (response) {
           $log.log(response.data);
@@ -59,6 +62,9 @@ angular
         })
         .catch(function (response) {
           $log.log(response);
+        })
+        .finally(function () {
+          BusyLoader.hide();
         });
     };
 
@@ -147,6 +153,18 @@ angular
           } else if (response.data.status === 'Product already added') {
             productSelected.response = 'Item is already in the Bag!';
             ctrl.openModal(productSelected, product);
+          } else {
+            ctrl.showAlert = function () {
+              var alertPopup = $ionicPopup.alert({
+                title: 'Out of Stock',
+                template: 'Oops! You just missed the last item in stock. It got sold out. Hurry up and purchase the items you like before they get sold out too.'
+              });
+
+              alertPopup.then(function () {
+                $state.go('store.products.latest');
+              });
+            };
+            ctrl.showAlert();
           }
         })
         .catch(function (response) {
@@ -169,6 +187,7 @@ angular
       ctrl.productSelected = productSelected;
       ctrl.product = product;
       $log.log(ctrl.product);
+      $log.log('productSelected=================');
       $log.log(ctrl.productSelected);
       ctrl.modal.show();
     };

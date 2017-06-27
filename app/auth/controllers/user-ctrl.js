@@ -1,6 +1,5 @@
 'use strict';
-angular.module('main')
-.controller('UserCtrl', function (
+angular.module('main').controller('UserCtrl', function (
   $log,
   $location,
   $state,
@@ -13,13 +12,14 @@ angular.module('main')
   $timeout,
   Config,
   Auth,
-  BusyLoader,
   Firebase
 ) {
-
   var ctrl = this;
 
-  $log.log('Hello from your Controller: UserCtrl in module auth:. ctrl is your controller:', ctrl);
+  $log.log(
+    'Hello from your Controller: UserCtrl in module auth:. ctrl is your controller:',
+    ctrl
+  );
 
   ctrl.user = {
     email: '',
@@ -51,7 +51,6 @@ angular.module('main')
   // });
 
   ctrl.internalLogin = function (user) {
-    BusyLoader.show();
     // var posOptions = {timeout: 1000, enableHighAccuracy: false};
     // $cordovaGeolocation.getCurrentPosition(posOptions)
     // .then(function (position) {
@@ -76,40 +75,38 @@ angular.module('main')
     user.longitude = Config.ENV.USER.LONGITUDE;
     user.userAgent = ionic.Platform.ua;
     Firebase.includeFCMToken(user)
-    .then(function (user) {
-      return Auth.login(user);
-    })
-    .then(function (response) {
-      $log.log(response);
-      ctrl.savedUser.email = user.email;
-      ctrl.savedUser.password = user.password;
-      ctrl.savedUser.name = response.data.name;
-      ctrl.savedUser.authtoken = response.data.authtoken;
-      ctrl.savedUser.profileImage = response.data.profileImg;
-      Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
-      Config.ENV.USER.NAME = response.data.name;
-      Config.ENV.USER.PROFILE_IMG = response.data.profileImg;
-      $rootScope.$emit('setUserDetailForMenu');
-      $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-      BusyLoader.hide();
-      $state.go('store.products.latest');
-      //$location.path('/store/products/latest');
-    })
-    .catch(function (response) {
-      $log.log(response);
-      $localStorage.$reset();
-      if (response.data && response.data.statusCode === '403') {
-        ctrl.responseCB = 'Invalid credential.';
-      } else {
-        ctrl.responseCB = 'Something went wrong. Please try again.';
-      }
-      BusyLoader.hide();
-      $state.go('landing');
-    });
+      .then(function (user) {
+        return Auth.login(user);
+      })
+      .then(function (response) {
+        $log.log(response);
+        ctrl.savedUser.email = user.email;
+        ctrl.savedUser.password = user.password;
+        ctrl.savedUser.name = response.data.name;
+        ctrl.savedUser.authtoken = response.data.authtoken;
+        ctrl.savedUser.profileImage = response.data.profileImg;
+        Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
+        Config.ENV.USER.NAME = response.data.name;
+        Config.ENV.USER.PROFILE_IMG = response.data.profileImg;
+        $rootScope.$emit('setUserDetailForMenu');
+        $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
+        $state.go('store.products.latest');
+
+        //$location.path('/store/products/latest');
+      })
+      .catch(function (response) {
+        $log.log(response);
+        $localStorage.$reset();
+        if (response.data && response.data.statusCode === '403') {
+          ctrl.responseCB = 'Invalid credential.';
+        } else {
+          ctrl.responseCB = 'Something went wrong. Please try again.';
+        }
+        $state.go('landing');
+      });
   };
 
   ctrl.internalFacebookLogin = function () {
-    BusyLoader.show();
     $log.log('facebookLogin');
     var img = null;
     var fbUser = {};
@@ -130,56 +127,51 @@ angular.module('main')
     //   // return Auth.facebookLogin();
     // });
     Auth.facebookLogin()
-    .then(function (facebook) {
-      $log.log('FB data ================');
-      // $log.log($ionicUser.social.facebook);
-      fbUser.email = facebook.email;
-      fbUser.name = facebook.displayName;
-      fbUser.fbid = facebook.providerId;
-      fbUser.latitude = Config.ENV.USER.LATITUDE;
-      fbUser.longitude = Config.ENV.USER.LONGITUDE;
-      fbUser.userAgent = ionic.Platform.ua;
-      img = facebook.photoURL;
-      $log.log('FB picture ================');
-      $log.log(img);
-      return Firebase.includeFCMToken(fbUser);
-    })
-    .then(function (fbUser) {
-      return Auth.fbLogin(fbUser);
-    })
-    .then(function (response) {
-      $log.log('FB response =====================');
-      $log.log(response);
-      ctrl.savedUser.email = fbUser.email;
-      ctrl.savedUser.name = fbUser.name;
-      ctrl.savedUser.userId = fbUser.fbid;
-      ctrl.savedUser.authtoken = response.data.authtoken;
-      ctrl.savedUser.profileImage = img;
-      ctrl.savedUser.socialLogin = true;
-      Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
-      Config.ENV.USER.NAME = response.data.name;
-      Config.ENV.USER.PROFILE_IMG = img;
-      $rootScope.$emit('setUserDetailForMenu');
-      $log.log('FB picture ================');
-      $log.log(img);
-      $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-      BusyLoader.hide();
-      $state.go('store.products.latest');
-    })
-    .catch(function (error) {
-      $log.log(error);
-      $localStorage.$reset();
-      BusyLoader.hide();
-      $state.go('landing');
-    });
+      .then(function (facebook) {
+        $log.log('FB data ================');
+        // $log.log($ionicUser.social.facebook);
+        fbUser.email = facebook.email;
+        fbUser.name = facebook.displayName;
+        fbUser.fbid = facebook.providerId;
+        fbUser.latitude = Config.ENV.USER.LATITUDE;
+        fbUser.longitude = Config.ENV.USER.LONGITUDE;
+        fbUser.userAgent = ionic.Platform.ua;
+        img = facebook.photoURL;
+        $log.log('FB picture ================');
+        $log.log(img);
+        return Firebase.includeFCMToken(fbUser);
+      })
+      .then(function (fbUser) {
+        return Auth.fbLogin(fbUser);
+      })
+      .then(function (response) {
+        $log.log('FB response =====================');
+        $log.log(response);
+        ctrl.savedUser.email = fbUser.email;
+        ctrl.savedUser.name = fbUser.name;
+        ctrl.savedUser.userId = fbUser.fbid;
+        ctrl.savedUser.authtoken = response.data.authtoken;
+        ctrl.savedUser.profileImage = img;
+        ctrl.savedUser.socialLogin = true;
+        Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
+        Config.ENV.USER.NAME = response.data.name;
+        Config.ENV.USER.PROFILE_IMG = img;
+        $rootScope.$emit('setUserDetailForMenu');
+        $log.log('FB picture ================');
+        $log.log(img);
+        $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
+        $state.go('store.products.latest');
+      })
+      .catch(function (error) {
+        $log.log(error);
+        $localStorage.$reset();
+        $state.go('landing');
+      });
   };
 
   ctrl.autoLogin = function () {
-    BusyLoader.show();
     var savedUser = $localStorage.savedUser;
-    $log.log(savedUser);
     if (!savedUser) {
-      BusyLoader.hide();
       return;
     }
 
@@ -190,44 +182,42 @@ angular.module('main')
       var fbUser = {};
       var img = null;
       Auth.isLoggedIn()
-      .then(function (response) {
-        fbUser.email = response.email;
-        fbUser.name = response.displayName;
-        fbUser.fbid = response.providerId;
-        img = response.photoURL;
-        Firebase.includeFCMToken(fbUser)
-        .then(function (fbUser) {
-          return Auth.fbLogin(fbUser);
-        })
         .then(function (response) {
-          $log.log(response);
-          ctrl.savedUser.email = fbUser.email;
-          ctrl.savedUser.name = fbUser.name;
-          ctrl.savedUser.userId = fbUser.fbid;
-          ctrl.savedUser.profileImage = img;
-          ctrl.savedUser.authtoken = response.data.authtoken;
-          ctrl.savedUser.socialLogin = true;
-          Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
-          Config.ENV.USER.NAME = response.data.name;
-          Config.ENV.USER.PROFILE_IMG = img;
-          $rootScope.$emit('setUserDetailForMenu');
-          $log.log('FB picture ================');
-          $log.log(img);
-          $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-          BusyLoader.hide();
-          $state.go('store.products.latest');
+          fbUser.email = response.email;
+          fbUser.name = response.displayName;
+          fbUser.fbid = response.providerId;
+          img = response.photoURL;
+          Firebase.includeFCMToken(fbUser)
+            .then(function (fbUser) {
+              return Auth.fbLogin(fbUser);
+            })
+            .then(function (response) {
+              $log.log(response);
+              ctrl.savedUser.email = fbUser.email;
+              ctrl.savedUser.name = fbUser.name;
+              ctrl.savedUser.userId = fbUser.fbid;
+              ctrl.savedUser.profileImage = img;
+              ctrl.savedUser.authtoken = response.data.authtoken;
+              ctrl.savedUser.socialLogin = true;
+              Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
+              Config.ENV.USER.NAME = response.data.name;
+              Config.ENV.USER.PROFILE_IMG = img;
+              $rootScope.$emit('setUserDetailForMenu');
+              $log.log('FB picture ================');
+              $log.log(img);
+              $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
+              $state.go('store.products.latest');
+            })
+            .catch(function (error) {
+              $log.log(error);
+              $localStorage.$reset();
+              $state.go('landing');
+            });
         })
         .catch(function (error) {
           $log.log(error);
-          $localStorage.$reset();
-          BusyLoader.hide();
-          $state.go('landing');
+          ctrl.internalFacebookLogin();
         });
-      })
-      .catch(function (error) {
-        $log.log(error);
-        ctrl.internalFacebookLogin();
-      });
     } else {
       var user = {};
       user.email = parsedUser.email;

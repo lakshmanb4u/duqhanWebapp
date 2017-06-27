@@ -1,6 +1,6 @@
 <ion-view view-title="User">
   <!-- do you want padding? -->
-  <ion-content class="padding">
+  <ion-content class="padding has-footer">
 
     <!-- content goes here -->
     <div class="list">
@@ -12,12 +12,10 @@
       </label>
     </div>
     <div class="padding">
-      <button class="button button-block button-outline button-stable"
-        ng-click="ctrl.signup()">
+      <button class="button button-block button-outline button-stable" ng-click="ctrl.signup()">
         Sign up
       </button>
-      <button class="button button-block button-outline button-positive"
-        ng-click="ctrl.signin()">
+      <button class="button button-block button-outline button-positive" ng-click="ctrl.signin()">
         Sign in
       </button>
     </div>
@@ -29,4 +27,5 @@
     </div>
 
   </ion-content>
+  <div ng-include="'auth/templates/footer.html'"></div>
 </ion-view>
