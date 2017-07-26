@@ -7,7 +7,8 @@ angular
     'ionic-datepicker',
     'ionic.ion.imageCacheFactory',
     'angularMoment',
-    'ionic.closePopup'
+    'ionic.closePopup',
+    'ksSwiper'
 
     // TODO: load other modules selected during generation
   ])

@@ -21,7 +21,7 @@
                 Specification
               </ion-item>
               <ion-item ng-repeat="(key, value) in ctrl.product.specifications">
-                {{key}}
+                {{key.replace('-', ' ')}}
                 <span class="item-note">{{value}}</span>
               </ion-item>
             </ion-list>

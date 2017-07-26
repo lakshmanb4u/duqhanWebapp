@@ -36,8 +36,8 @@ angular
       ctrl.cart.orderTotal + ctrl.cart.shippingTotal;
 
     /*===========================================
-  =            Get default address            =
-  ===========================================*/
+    =            Get default address            =
+    ===========================================*/
 
     ctrl.getDefaultAddress = function () {
       Store.getDefaultAddress()
@@ -61,8 +61,8 @@ angular
     /*=====  End of Get default address  ======*/
 
     /*======================================================
-  =            Get the shipping cost and time            =
-  ======================================================*/
+    =            Get the shipping cost and time            =
+    ======================================================*/
 
     ctrl.getShippingDetails = function (cart) {
       $log.log(cart);
@@ -103,8 +103,8 @@ angular
     });
 
     /*===============================================
-  =            Change delivery address            =
-  ===============================================*/
+    =            Change delivery address            =
+    ===============================================*/
 
     ctrl.addressSelectionError = true;
 
@@ -156,13 +156,19 @@ angular
     /*=====  End of Change delivery address  ======*/
 
     /*=======================================
-  =            Payment section            =
-  =======================================*/
+    =            Payment section            =
+    =======================================*/
+
+    ctrl.selectPaymentGateway = function () {
+      ctrl.cart.paymentGateway = 1;
+      ctrl.paymentGatewayModal.show();
+    };
 
     ctrl.isPayPalBrowserOpen = false;
     ctrl.pay = function () {
       $log.log(ctrl.cart);
       $log.log(ctrl.address);
+      ctrl.closePaymentGatewayModal();
       if (!ctrl.address) {
         var notification = {};
         notification.type = 'failure';
@@ -173,13 +179,44 @@ angular
       ctrl.cart.deliveryAddressId = ctrl.address.addressId;
       ctrl.cart.addressDto = ctrl.address;
 
+      //Only for web
+      ctrl.cart.appType = 2;
+
       Store.checkout(ctrl.cart)
         .then(function (response) {
           $log.log('response ==');
           $log.log(response.data.status);
           ctrl.payKey = response.data.statusCode;
+          var paymentUrl = response.data.paymentUrl;
           $localStorage.duqhanPayKey = ctrl.payKey;
-          $window.location.href = response.data.status;
+          if (ctrl.cart.paymentGateway === 2) {
+            var options = response.data.parameters;
+            var url = paymentUrl;
+            for (var key in options) {
+              if (options.hasOwnProperty(key)) {
+                $log.log(key + ' -> ' + options[key]);
+                if (url === paymentUrl) {
+                  key === 'CHECKSUMHASH' ?
+                    (url +=
+                        '?' +
+                        key +
+                        '=' +
+                        window.encodeURIComponent(options[key])) :
+                    (url += '?' + key + '=' + options[key]);
+                } else {
+                  key === 'CHECKSUMHASH' ?
+                    (url +=
+                        '&' +
+                        key +
+                        '=' +
+                        window.encodeURIComponent(options[key])) :
+                    (url += '&' + key + '=' + options[key]);
+                }
+              }
+            }
+            paymentUrl = url + '&APPTYPE=' + ctrl.cart.paymentGateway;
+          }
+          $window.location.href = paymentUrl;
         })
         .catch(function (error) {
           $log.log(error);
@@ -189,8 +226,8 @@ angular
     /*=====  End of Payment section  ======*/
 
     /*===============================================
-  =            Modal related functions            =
-  ===============================================*/
+    =            Modal related functions            =
+    ===============================================*/
 
     $ionicModal
       .fromTemplateUrl('select-address-modal.html', {
@@ -203,6 +240,19 @@ angular
 
     ctrl.closeModal = function () {
       ctrl.modal.hide();
+    };
+
+    $ionicModal
+      .fromTemplateUrl('store/templates/select-payment-gateway.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      })
+      .then(function (modal) {
+        ctrl.paymentGatewayModal = modal;
+      });
+
+    ctrl.closePaymentGatewayModal = function () {
+      ctrl.paymentGatewayModal.hide();
     };
 
     // Cleanup the modal when we're done with it!
