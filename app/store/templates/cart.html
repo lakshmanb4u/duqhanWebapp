@@ -45,7 +45,7 @@
         <div class="cart-items" ng-repeat="p in ctrl.cart.products">
           <div class="row product" ng-class="{'out-of-stack': p.available === 0}">
             <div class="col col-75">
-              <h2>{{p.name}}</h2>
+              <h2 ui-sref="store.product.overview({productId: p.productId})" style="cursor: pointer;">{{p.name}}</h2>
               <p>
                 <span ng-if="p.size">Size: {{p.size}}, </span>
                 <span ng-if="p.color">Color: {{p.color}}</span>

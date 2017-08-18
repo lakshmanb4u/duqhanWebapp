@@ -1,0 +1,14 @@
+[ {
+  "relation": [ "delegate_permission/common.handle_all_urls" ],
+  "target": {
+    "namespace": "web",
+    "site": "https://duqhan.com"
+  }
+}, {
+  "relation": [ "delegate_permission/common.handle_all_urls" ],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.duqhan.app",
+    "sha256_cert_fingerprints": [ "78:50:64:16:CB:F2:C5:41:34:58:30:51:07:37:09:E7:B8:70:CC:16:9E:DA:28:01:54:4D:35:7C:83:8B:97:33" ]
+  }
+} ]

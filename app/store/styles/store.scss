@@ -223,6 +223,11 @@ $assertive: #ef473a !default;
         font-weight: bold;
       }
     }
+    .shipping-wraper {
+      font-size: 12px;
+      margin-top: 0px;
+      color: #6d6d6d;
+    }
   }
   .products-tab-content {
     .category-slides {
@@ -281,6 +286,14 @@ $assertive: #ef473a !default;
   }
 }
 
+.products-tab-pane.pane .products-tab-content {
+  top: 79px;
+}
+
+.tab-content .bar-subheader {
+  top: 35px;
+}
+
 .product-by-category-pane.pane {
   top: 0px;
   .category-card {
@@ -308,13 +321,14 @@ $assertive: #ef473a !default;
 }
 
 .add-to-bag {
-  bottom: 40%;
+  top: 20%;
   min-height: inherit;
   height: auto;
-  top: inherit;
+  bottom: inherit;
   width: 40%;
   left: 30%;
   right: 30%;
+  max-height: 60%;
   .bar {
     &.bar-header {
       position: relative;
