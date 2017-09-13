@@ -3,8 +3,9 @@
   <ion-content class="padding has-footer">
     <div class="row responsive-lg">
       <div class="col col-50">
-        <p>We would love to hear from you. Please provide us your valuable feedback. You can also contact us if you are facing problem accessing the site. Please select appropriate subject and send it to us.</p>
-        <form name="ctrl.ContactForm" ng-submit="ctrl.ContactUs()" novalidate="">
+        <p>We would love to hear from you. Please provide us your valuable feedback. You can also contact us if you are facing
+          problem accessing the site. Please select appropriate subject and send it to us.</p>
+        <form name="ctrl.ContactPublicForm" ng-submit="ctrl.ContactUs()" novalidate="">
           <label class="item item-input item-select">
           <div class = "input-label">
               Subject
@@ -14,8 +15,22 @@
             </select>
           </label>
           <label class="item item-input">
-            <textarea placeholder="Messege" ng-model="ctrl.Contact.status" style="height: 73px;"></textarea>
-          </label>
+              <input type="text" name="name" placeholder="Your name" ng-model="ctrl.Contact.name" required/>
+              <em ng-show="ctrl.ContactPublicForm.name.$error.required && ctrl.ContactPublicForm.submitted" style="padding: 0 5px; font-size: 12px; color: red;">* Name is required</em>
+            </label>
+          <label class="item item-input">
+              <input type="email" name="email" placeholder="Email Id" ng-model="ctrl.Contact.email" required/>
+              <em ng-show="ctrl.ContactPublicForm.email.$error.required && ctrl.ContactPublicForm.submitted" style="padding: 0 5px; font-size: 12px; color: red;">* Email is required</em>
+              <em ng-show="!ctrl.ContactPublicForm.email.$error.required && ctrl.ContactPublicForm.email.$invalid && ctrl.ContactPublicForm.submitted" style="padding: 0 5px; font-size: 12px; color: red;">* Email is invalid</em>
+            </label>
+          <label class="item item-input">
+              <input type="text" name="mobile" placeholder="Phone Number" ng-model="ctrl.Contact.mobile" required/>
+              <em ng-show="ctrl.ContactPublicForm.mobile.$error.required && ctrl.ContactPublicForm.submitted" style="padding: 0 5px; font-size: 12px; color: red;">* Mobile is required</em>
+            </label>
+          <label class="item item-input">
+              <textarea placeholder="Messege" ng-model="ctrl.Contact.status" style="height: 73px;" name="status" required></textarea>
+              <em ng-show="ctrl.ContactPublicForm.status.$error.required && ctrl.ContactPublicForm.submitted" style="padding: 0 5px; font-size: 12px; color: red;">* Messege is required</em>
+            </label>
           <button class="button button-full button-positive">
             Contact Us
           </button>

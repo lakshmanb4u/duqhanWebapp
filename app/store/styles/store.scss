@@ -87,7 +87,9 @@ $assertive: #ef473a !default;
 // -------------------------------
 .products-tab-pane.pane,
 .product-tab-pane.pane,
-.product-by-category-pane.pane {
+.product-by-category-pane.pane,
+.free-products.pane,
+.free-product {
   top: 44px;
   .products-tab-content,
   .product-tab-content {
@@ -209,9 +211,10 @@ $assertive: #ef473a !default;
       color: #ffffff;
       padding: 2px 5px;
       position: absolute;
-      top: 15px;
+      top: 38px;
       font-size: 12px;
       opacity: .8;
+      z-index: 5;
     }
     .price-wraper {
       font-size: 12px;
@@ -282,6 +285,26 @@ $assertive: #ef473a !default;
       border: 0px solid #000000;
       display: inline-block;
       padding: 15px 10px;
+    }
+  }
+}
+
+.free-products.pane {
+  top: 0;
+  .button {
+    &.p-none {
+      margin: 0;
+    }
+  }
+}
+
+.free-product {
+  top: 0;
+  .bar.bar-footer {
+    bottom: 0;
+    .button {
+      margin: 0;
+      line-height: 44px;
     }
   }
 }
@@ -908,4 +931,15 @@ div.hscroller-card-animated-11 {
   to {
     opacity: 1;
   }
+}
+.menu-open-overlay {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  background: black;
+  left: 0;
+  top: 0;
+  opacity: 0.5;
+  z-index: 9999;
 }

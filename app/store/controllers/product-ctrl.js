@@ -236,52 +236,6 @@ angular
     ctrl.colorModal = function () {
       ctrl.colorName = ctrl.productSelected.size.sizeColorMap;
       ctrl.colormodal.show();
-
-      // var buttons = [];
-
-      // angular.forEach(ctrl.productSelected.size.sizeColorMap, function (value) {
-
-      //   buttons.push({ text: value.colorText });
-
-      // });
-
-      // $ionicActionSheet.show({
-
-      //   buttons: buttons,
-
-      //   titleText: 'Select color',
-
-      //   cancelText: 'Cancel',
-
-      //   cancel: function () {
-
-      //     // add cancel code..
-
-      //   },
-
-      //   buttonClicked: function (index) {
-
-      //     // $log.log(index);
-
-      //     // $log.log(ctrl.productSelected.size.sizeColorMap[index]);
-
-      //     ctrl.productSelected.size.sizeColor =
-
-      //       ctrl.productSelected.size.sizeColorMap[index];
-
-      //     ctrl.productSelected.mapId =
-
-      //       ctrl.productSelected.size.sizeColor.mapId;
-
-      //     // $log.log(ctrl.productSelected.mapId);
-
-      //     ctrl.addToBagPersist(ctrl.productSelected, ctrl.product);
-
-      //     return true;
-
-      //   }
-
-      // });
     };
 
     ctrl.colorSelected = function (index) {

@@ -1,11 +1,8 @@
 'use strict';
-angular
-  .module('store')
-  .controller('ContactusCtrl', function ($log, $rootScope, $localStorage, Store) {
-    $log.log(
-      'Hello from your Controller: ContactusCtrl in module store:. This is your controller:',
-      this
-    );
+angular.module('auth')
+  .controller('ContactusPublicCtrl', function ($log, $rootScope, $localStorage, Store) {
+
+    $log.log('Hello from your Controller: ContactusPublicCtrl in module auth:. This is your controller:', this);
 
     var ctrl = this;
 
@@ -18,25 +15,22 @@ angular
     ];
     ctrl.Subjects = ctrl.countList[0].id;
 
-    var savedUser = $localStorage.savedUser;
-    var parsedUser = JSON.parse(savedUser);
-    $log.log(parsedUser);
-
-    ctrl.ContactForm = {
+    ctrl.ContactPublicForm = {
       submitted: false
     };
     ctrl.Contact = {
       statusCode: '',
       status: '',
-      email: parsedUser.email,
-      mobile: parsedUser.mobile
+      name: '',
+      email: '',
+      mobile: ''
     };
 
     ctrl.ContactUs = function () {
-      ctrl.ContactForm.submitted = true;
-      if (ctrl.ContactForm.$valid) {
+      ctrl.ContactPublicForm.submitted = true;
+      if (ctrl.ContactPublicForm.$valid) {
         ctrl.Contact.statusCode = ctrl.statusCode;
-        Store.contactUs(ctrl.Contact)
+        Store.contactUsPublic(ctrl.Contact)
           .then(function (response) {
             $log.log(response);
             var notification = {};
@@ -48,11 +42,12 @@ angular
               statusCode: '',
               status: ''
             };
-            ctrl.ContactForm.submitted = false;
+            ctrl.ContactPublicForm.submitted = false;
           })
           .catch(function (response) {
             $log.log(response);
           });
       }
     };
+
   });

@@ -10,6 +10,7 @@ angular
     $state,
     $localStorage,
     $window,
+    $ionicPopup,
     Store
   ) {
     $log.log(
@@ -36,7 +37,7 @@ angular
       ctrl.cart.orderTotal + ctrl.cart.shippingTotal;
 
     /*===========================================
-    =            Get default address            =
+    =            Get default address and email            =
     ===========================================*/
 
     ctrl.getDefaultAddress = function () {
@@ -52,13 +53,20 @@ angular
           } else {
             ctrl.address = null;
           }
+          return Store.getUserEmailAndPhone();
+        })
+        .then(function (response) {
+          $log.log('getUserEmailAndPhone');
+          $log.log(response.data);
+          ctrl.userEmail = response.data.email;
+          ctrl.mobile = response.data.mobile;
         })
         .catch(function (error) {
           $log.log(error);
         });
     };
 
-    /*=====  End of Get default address  ======*/
+    /*=====  End of Get default address and email  ======*/
 
     /*======================================================
     =            Get the shipping cost and time            =
@@ -156,6 +164,65 @@ angular
     /*=====  End of Change delivery address  ======*/
 
     /*=======================================
+    =            Set Email Address            =
+    =======================================*/
+
+    ctrl.setUserEmailAndPhone = function (email, phone) {
+      ctrl.data = {};
+      ctrl.data.email = email;
+      ctrl.data.mobile = phone;
+      $log.log(ctrl.data);
+      var template = [];
+      if (!email) {
+        template.push('<input type="email" ng-model="ctrl.data.email" placeholder="Email Id" style="padding: 2px 5px; margin-bottom: 10px;">');
+      }
+      if (!phone) {
+        template.push('<input type="text" ng-model="ctrl.data.mobile" placeholder="Phone Number" style="padding: 2px 5px;">');
+      }
+      var str = template.join('');
+      $ionicPopup.show({
+        template: str,
+        title: 'Contact',
+        subTitle: 'Please enter contact details to continue',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Save',
+            type: 'button-positive',
+            onTap: function (e) {
+              if (!ctrl.data.email || !ctrl.data.mobile) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                $log.log(ctrl.data);
+                Store.setUserEmailAndPhone(ctrl.data)
+                  .then(function (response) {
+                    $log.log('setUserEmail');
+                    if (response && response.data && response.data.email && response.data.mobile) {
+                      ctrl.userEmail = response.data.email;
+                      ctrl.mobile = response.data.mobile;
+                      ctrl.pay();
+                    } else {
+                      var notification = {};
+                      notification.type = 'failure';
+                      notification.text = 'Something went wrong! Please try again.';
+                      $rootScope.$emit('setNotification', notification);
+                    }
+                  })
+                  .catch(function (error) {
+                    $log.log(error);
+                  });
+              }
+            }
+          }
+        ]
+      });
+    };
+
+    /*=====  End of Set Email Address  ======*/
+
+    /*=======================================
     =            Payment section            =
     =======================================*/
 
@@ -174,6 +241,11 @@ angular
         notification.type = 'failure';
         notification.text = 'Please select a delivery address';
         $rootScope.$emit('setNotification', notification);
+        return;
+      }
+      if (!ctrl.userEmail || !ctrl.mobile) {
+        $log.log('email not found');
+        ctrl.setUserEmailAndPhone(ctrl.userEmail, ctrl.mobile);
         return;
       }
       ctrl.cart.deliveryAddressId = ctrl.address.addressId;
@@ -198,18 +270,18 @@ angular
                 if (url === paymentUrl) {
                   key === 'CHECKSUMHASH' ?
                     (url +=
-                        '?' +
-                        key +
-                        '=' +
-                        window.encodeURIComponent(options[key])) :
+                      '?' +
+                      key +
+                      '=' +
+                      window.encodeURIComponent(options[key])) :
                     (url += '?' + key + '=' + options[key]);
                 } else {
                   key === 'CHECKSUMHASH' ?
                     (url +=
-                        '&' +
-                        key +
-                        '=' +
-                        window.encodeURIComponent(options[key])) :
+                      '&' +
+                      key +
+                      '=' +
+                      window.encodeURIComponent(options[key])) :
                     (url += '&' + key + '=' + options[key]);
                 }
               }

@@ -42,11 +42,12 @@
 
     <!-- ROUTING INJECTED HERE: storeContent -->
     <ion-nav-view name="storeContent"></ion-nav-view>
+    <div class="menu-open-overlay" ng-show="menu.isMenuOpen"></div>
 
   </ion-side-menu-content>
 
   <!-- SIDEMENU -->
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" width="400">
 
     <!-- menu header -->
     <ion-header-bar class="bar-energized">
@@ -77,9 +78,9 @@
         <ion-item menu-close ui-sref="store.profile" ng-class="{'active': $state.includes('store.profile')}">
           My Profile
         </ion-item>
-        <ion-item menu-close ui-sref="store.changepassword" ng-class="{'active': $state.includes('store.changepassword')}">
+        <!-- <ion-item menu-close ui-sref="store.changepassword" ng-class="{'active': $state.includes('store.changepassword')}">
           My Password
-        </ion-item>
+        </ion-item> -->
         <ion-item menu-close ui-sref="store.myaddress" ng-class="{'active': $state.includes('store.myaddress')}">
           My Addresses
         </ion-item>
