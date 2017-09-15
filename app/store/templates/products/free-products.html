@@ -1,10 +1,10 @@
 <ion-view view-title="Free Products" class="free-products">
   <!-- do you want padding? -->
-  <ion-content class="padding products-tab-content">
+  <ion-content class="padding products-tab-content" overflow-scroll="true">
 
     <!-- content goes here -->
     <div class="row p-l-n p-r-n products-row responsive-lg">
-      <div class="col col-20 m-product" ng-repeat="p in ctrl.products" ui-sref="store.freeProduct({productId: p.productId})">
+      <div class="col col-20 m-product" ng-repeat="p in ctrl.products" ng-mousedown="ctrl.goToProductDetailsPage($event,p.productId)" >
         <div class="product-preview">
           <span class="discount">{{100| number : 0}}%</span>
           <div class="item item-divider thumb-header-footer">

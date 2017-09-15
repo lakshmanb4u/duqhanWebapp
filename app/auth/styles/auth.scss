@@ -46,7 +46,7 @@ $light: #ffffff !default;
       position: absolute;
       top: 0;
       font-size: 24px;
-      opacity: .8;
+      opacity: 0.8;
       z-index: 5;
       font-weight: bold;
       -webkit-clip-path: polygon(0% 0%, 75% 0%, 85% 50%, 75% 100%, 0% 100%);
@@ -63,7 +63,7 @@ $light: #ffffff !default;
         em {
           font-size: 60%;
           display: block;
-          text-align: center
+          text-align: center;
         }
       }
     }
@@ -224,3 +224,4 @@ $light: #ffffff !default;
     }
   }
 }
+

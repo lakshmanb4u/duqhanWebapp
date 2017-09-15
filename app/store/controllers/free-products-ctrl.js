@@ -1,8 +1,19 @@
 'use strict';
-angular.module('store')
-  .controller('FreeProductsCtrl', function ($log, $ionicSlideBoxDelegate, $ionicModal, $scope, BusyLoader, Store) {
-
-    $log.log('Hello from your Controller: FreeProductCtrl in module store:. This is your controller:', this);
+angular
+  .module('store')
+  .controller('FreeProductsCtrl', function (
+    $log,
+    $ionicSlideBoxDelegate,
+    $ionicModal,
+    $scope,
+    BusyLoader,
+    Store,
+    $state
+  ) {
+    $log.log(
+      'Hello from your Controller: FreeProductCtrl in module store:. This is your controller:',
+      this
+    );
 
     /* Storing contextual this in a variable for easy access */
     var ctrl = this;
@@ -33,7 +44,7 @@ angular.module('store')
           /* Randoize items */
           if (products && products.length > 0) {
             products.sort(function () {
-              return .5 - Math.random();
+              return 0.5 - Math.random();
             });
             ctrl.products = products;
           }
@@ -49,6 +60,12 @@ angular.module('store')
     =         Get free product list end      =
     ========================================*/
 
+    ctrl.goToProductDetailsPage = function (evt, productId) {
+      if (evt.which === 1) {
+        $state.go('store.freeProduct', { productId: productId });
+      }
+    };
+
     /*==================================================
     Section: Initialization
     ==================================================*/
@@ -58,5 +75,4 @@ angular.module('store')
     /*==================================================
     End: Initialization
     ==================================================*/
-
   });

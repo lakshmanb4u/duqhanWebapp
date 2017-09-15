@@ -132,6 +132,8 @@ angular.module('main').controller('UserCtrl', function (
     //   // return $ionicFacebookAuth.login();
     //   // return Auth.facebookLogin();
     // });
+
+    
     Auth.facebookLogin()
       .then(function (facebook) {
         $log.log('FB data ================');

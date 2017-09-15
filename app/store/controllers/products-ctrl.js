@@ -1,5 +1,6 @@
 'use strict';
-angular.module('store')
+angular
+  .module('store')
   .controller('ProductsCtrl', function (
     $log,
     $rootScope,
@@ -12,12 +13,14 @@ angular.module('store')
     Store,
     Config
   ) {
-
     /* Storing contextual this in a variable for easy access */
 
     var ctrl = this;
 
-    $log.log('Hello from your Controller: ProductsCtrl in module store:. This is your controller:', ctrl);
+    $log.log(
+      'Hello from your Controller: ProductsCtrl in module store:. This is your controller:',
+      ctrl
+    );
 
     /*========================================
     =            Get product list            =
@@ -65,11 +68,17 @@ angular.module('store')
         });
     };
 
+    ctrl.goToProductDetailsPage = function (evt, productId) {
+      if(evt.which === 1){
+          $state.go('store.product.overview', { productId: productId });
+      }
+    };
+
     /*----------  Get latest products  ----------*/
 
     ctrl.loadLatestProductList = function () {
       var productsParam = {
-        start: ctrl.start + (ctrl.page * Config.ENV.PRODUCTS_PER_PAGE),
+        start: ctrl.start + ctrl.page * Config.ENV.PRODUCTS_PER_PAGE,
         limit: Config.ENV.PRODUCTS_PER_PAGE,
         isRecent: false,
         categoryId: null
@@ -81,7 +90,7 @@ angular.module('store')
 
     ctrl.loadRecentlyViewedProductList = function () {
       var productsParam = {
-        start: ctrl.start + (ctrl.page * Config.ENV.PRODUCTS_PER_PAGE),
+        start: ctrl.start + ctrl.page * Config.ENV.PRODUCTS_PER_PAGE,
         limit: Config.ENV.PRODUCTS_PER_PAGE,
         isRecent: true,
         categoryId: null
@@ -125,5 +134,4 @@ angular.module('store')
     });
 
     /*=====  End of Get product list  ======*/
-
   });

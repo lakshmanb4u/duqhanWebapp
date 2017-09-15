@@ -104,6 +104,12 @@ angular
       }
     };
 
+    ctrl.goToProductDetailsPage = function (evt, productId) {
+      if (evt.which === 1) {
+        $state.go('store.product.overview', { productId: productId });
+      }
+    };
+
     /*=====  End of Show products by category  ======*/
 
     /*===============================================
