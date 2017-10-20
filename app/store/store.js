@@ -7,7 +7,8 @@ angular
     'ionic-datepicker',
     'ionic.ion.imageCacheFactory',
     'angularMoment',
-    'ionic.closePopup'
+    'ionic.closePopup',
+    'ksSwiper'
 
     // TODO: load other modules selected during generation
   ])
@@ -88,6 +89,24 @@ angular
           }
         }
       })
+      // .state('store.freeProducts', {
+      //   url: '/free-products',
+      //   views: {
+      //     storeContent: {
+      //       templateUrl: 'store/templates/products/free-products.html',
+      //       controller: 'FreeProductsCtrl as ctrl'
+      //     }
+      //   }
+      // })
+      // .state('store.freeProduct', {
+      //   url: '/free-products/:productId',
+      //   views: {
+      //     storeContent: {
+      //       templateUrl: 'store/templates/product/free-product.html',
+      //       controller: 'FreeProductCtrl as ctrl'
+      //     }
+      //   }
+      // })
       .state('store.product', {
         url: '/product/:productId',
         abstract: true,

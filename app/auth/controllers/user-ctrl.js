@@ -10,6 +10,7 @@ angular.module('main').controller('UserCtrl', function (
   $ionicUser,
   // $cordovaGeolocation,
   $timeout,
+  $analytics,
   Config,
   Auth,
   Firebase
@@ -85,12 +86,18 @@ angular.module('main').controller('UserCtrl', function (
         ctrl.savedUser.name = response.data.name;
         ctrl.savedUser.authtoken = response.data.authtoken;
         ctrl.savedUser.profileImage = response.data.profileImg;
+        ctrl.savedUser.freeProductEligibility = response.data.freeProductEligibility;
         Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
         Config.ENV.USER.NAME = response.data.name;
         Config.ENV.USER.PROFILE_IMG = response.data.profileImg;
         $rootScope.$emit('setUserDetailForMenu');
         $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-        $state.go('store.products.latest');
+        if (ctrl.savedUser.freeProductEligibility) {
+          // $state.go('store.freeProducts');
+          $state.go('store.products.latest');
+        } else {
+          $state.go('store.products.latest');
+        }
 
         //$location.path('/store/products/latest');
       })
@@ -126,10 +133,11 @@ angular.module('main').controller('UserCtrl', function (
     //   // return $ionicFacebookAuth.login();
     //   // return Auth.facebookLogin();
     // });
+
     Auth.facebookLogin()
       .then(function (facebook) {
         $log.log('FB data ================');
-        // $log.log($ionicUser.social.facebook);
+        $log.log(facebook);
         fbUser.email = facebook.email;
         fbUser.name = facebook.displayName;
         fbUser.fbid = facebook.providerId;
@@ -151,16 +159,33 @@ angular.module('main').controller('UserCtrl', function (
         ctrl.savedUser.name = fbUser.name;
         ctrl.savedUser.userId = fbUser.fbid;
         ctrl.savedUser.authtoken = response.data.authtoken;
-        ctrl.savedUser.profileImage = img;
+        ctrl.savedUser.profileImage = response.data.profileImg ? response.data.profileImg : img;
+        ctrl.savedUser.freeProductEligibility = response.data.freeProductEligibility;
         ctrl.savedUser.socialLogin = true;
         Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
         Config.ENV.USER.NAME = response.data.name;
-        Config.ENV.USER.PROFILE_IMG = img;
+        Config.ENV.USER.PROFILE_IMG = ctrl.savedUser.profileImage;
         $rootScope.$emit('setUserDetailForMenu');
         $log.log('FB picture ================');
         $log.log(img);
         $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-        $state.go('store.products.latest');
+        if (response.data.isFirstLogin) {
+          $analytics.eventTrack('CompleteRegistration');
+        }
+        if (ctrl.savedUser.freeProductEligibility) {
+          // $state.go('store.freeProducts');
+          $state.go('store.products.latest');
+        } else {
+          $state.go('store.products.latest');
+        }
+        /* eslint-disable camelcase */
+        window.Intercom('boot', {
+          app_id: 'zcqrnybo',
+          email: ctrl.savedUser.email,
+          user_id: ctrl.savedUser.userId
+        });
+        /* eslint-enable camelcase */
+        window.Intercom('update');
       })
       .catch(function (error) {
         $log.log(error);
@@ -179,40 +204,52 @@ angular.module('main').controller('UserCtrl', function (
     $log.log(parsedUser);
 
     if (parsedUser.socialLogin) {
-      var fbUser = {};
-      var img = null;
+      // var fbUser = {};
+      // var img = null;
       Auth.isLoggedIn()
-        .then(function (response) {
-          fbUser.email = response.email;
-          fbUser.name = response.displayName;
-          fbUser.fbid = response.providerId;
-          img = response.photoURL;
-          Firebase.includeFCMToken(fbUser)
-            .then(function (fbUser) {
-              return Auth.fbLogin(fbUser);
-            })
-            .then(function (response) {
-              $log.log(response);
-              ctrl.savedUser.email = fbUser.email;
-              ctrl.savedUser.name = fbUser.name;
-              ctrl.savedUser.userId = fbUser.fbid;
-              ctrl.savedUser.profileImage = img;
-              ctrl.savedUser.authtoken = response.data.authtoken;
-              ctrl.savedUser.socialLogin = true;
-              Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
-              Config.ENV.USER.NAME = response.data.name;
-              Config.ENV.USER.PROFILE_IMG = img;
-              $rootScope.$emit('setUserDetailForMenu');
-              $log.log('FB picture ================');
-              $log.log(img);
-              $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-              $state.go('store.products.latest');
-            })
-            .catch(function (error) {
-              $log.log(error);
-              $localStorage.$reset();
-              $state.go('landing');
-            });
+        .then(function () {
+          if (parsedUser.freeProductEligibility) {
+            // $state.go('store.freeProducts');
+            $state.go('store.products.latest');
+          } else {
+            $state.go('store.products.latest');
+          }
+          // fbUser.email = response.email;
+          // fbUser.name = response.displayName;
+          // fbUser.fbid = response.providerId;
+          // img = response.photoURL;
+          // Firebase.includeFCMToken(fbUser)
+          //   .then(function (fbUser) {
+          //     return Auth.fbLogin(fbUser);
+          //   })
+          //   .then(function (response) {
+          //     $log.log(response);
+          //     ctrl.savedUser.email = fbUser.email;
+          //     ctrl.savedUser.name = fbUser.name;
+          //     ctrl.savedUser.userId = fbUser.fbid;
+          //     ctrl.savedUser.profileImage = response.data.profileImg ? response.data.profileImg : img;
+          //     ctrl.savedUser.freeProductEligibility = response.data.freeProductEligibility;
+          //     ctrl.savedUser.authtoken = response.data.authtoken;
+          //     ctrl.savedUser.mobile = response.data.mobile;
+          //     ctrl.savedUser.socialLogin = true;
+          //     Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
+          //     Config.ENV.USER.NAME = response.data.name;
+          //     Config.ENV.USER.PROFILE_IMG = ctrl.savedUser.profileImage;
+          //     $rootScope.$emit('setUserDetailForMenu');
+          //     $log.log('FB picture ================');
+          //     $log.log(img);
+          //     $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
+          //     if (ctrl.savedUser.freeProductEligibility) {
+          //       $state.go('store.freeProducts');
+          //     } else {
+          //       $state.go('store.products.latest');
+          //     }
+          //   })
+          //   .catch(function (error) {
+          //     $log.log(error);
+          //     $localStorage.$reset();
+          //     $state.go('landing');
+          //   });
         })
         .catch(function (error) {
           $log.log(error);
@@ -228,6 +265,10 @@ angular.module('main').controller('UserCtrl', function (
 
   // Call autologin
   ctrl.autoLogin();
+  window.Intercom('boot', {
+    // eslint-disable-next-line camelcase
+    app_id: 'zcqrnybo'
+  });
 
   // Catching calls from outside this controller
   $rootScope.$on('internalLogin', function (event, user) {
@@ -242,6 +283,10 @@ angular.module('main').controller('UserCtrl', function (
   });
 
   ctrl.notification = {};
+
+  ctrl.facebookLogin = function () {
+    ctrl.internalFacebookLogin();
+  };
 
   ctrl.setNotification = function (notification) {
     ctrl.notification.type = notification.type;

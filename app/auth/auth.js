@@ -11,26 +11,26 @@ angular
         templateUrl: 'auth/templates/landing.html',
         controller: 'UserCtrl as ctrl'
       })
-      .state('signup', {
-        url: '/signup',
-        templateUrl: 'auth/templates/signup.html',
-        controller: 'SignupCtrl as ctrl'
-      })
+      // .state('signup', {
+      //   url: '/signup',
+      //   templateUrl: 'auth/templates/signup.html',
+      //   controller: 'SignupCtrl as ctrl'
+      // })
       .state('login', {
         url: '/login',
         templateUrl: 'auth/templates/login.html',
         controller: 'LoginCtrl as ctrl'
       })
-      .state('forgot-password', {
-        url: '/forgot-password',
-        templateUrl: 'auth/templates/forgot-password.html',
-        controller: 'ForgotPasswordCtrl as ctrl'
-      })
-      .state('change-password', {
-        url: '/change-password/:email',
-        templateUrl: 'auth/templates/change-password.html',
-        controller: 'ForgotPasswordCtrl as ctrl'
-      })
+      // .state('forgot-password', {
+      //   url: '/forgot-password',
+      //   templateUrl: 'auth/templates/forgot-password.html',
+      //   controller: 'ForgotPasswordCtrl as ctrl'
+      // })
+      // .state('change-password', {
+      //   url: '/change-password/:email',
+      //   templateUrl: 'auth/templates/change-password.html',
+      //   controller: 'ForgotPasswordCtrl as ctrl'
+      // })
       .state('aboutus', {
         url: '/aboutus',
         templateUrl: 'auth/templates/misc/about.html'
@@ -38,7 +38,7 @@ angular
       .state('contactus', {
         url: '/contactus',
         templateUrl: 'auth/templates/misc/contactus.html',
-        controller: 'ContactusCtrl as ctrl'
+        controller: 'ContactusPublicCtrl as ctrl'
       })
       .state('returnPolicy', {
         url: '/return-policy',

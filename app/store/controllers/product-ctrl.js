@@ -12,6 +12,7 @@ angular
     $rootScope,
     $timeout,
     $ionicPopup,
+    $sce,
     Store,
     BusyLoader
   ) {
@@ -59,6 +60,11 @@ angular
           ctrl.product.colorArr = colorArr.toString();
           $ionicSlideBoxDelegate.$getByHandle('image-viewer').update();
           ctrl.productId = ctrl.product.productId;
+          ctrl.allSelected = false;
+          ctrl.allSelectedArr = [];
+          if (ctrl.product.properties.length === 0) {
+            ctrl.checkSelectedProperties();
+          }
         })
         .catch(function (response) {
           $log.log(response);
@@ -79,8 +85,91 @@ angular
     /*=====  End of Get product details  ======*/
 
     /*==================================================
-  Section: Slider button to navigate throuh images
-  ==================================================*/
+    Section: Property List
+    ==================================================*/
+    ctrl.trustAsHtml = function (string) {
+      return $sce.trustAsHtml(string);
+    };
+    $ionicModal
+      .fromTemplateUrl('store/templates/product/propertyListModal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      })
+      .then(function (modal) {
+        ctrl.propertyListModal = modal;
+      });
+    ctrl.openPropertyList = function (p) {
+      ctrl.propertyList = p;
+      ctrl.propertyListModal.show();
+    };
+    ctrl.closePropertyListModal = function () {
+      ctrl.propertyListModal.hide();
+    };
+
+    ctrl.propertySelected = function (property) {
+      // $log.log(property);
+      ctrl.propertyList.selectedProperty = property.value;
+      ctrl.propertyList.selectedPropertyId = property.id;
+      ctrl.checkSelectedProperties();
+      ctrl.propertyListModal.hide();
+    };
+
+    /*----------  Setting Price after selecting categories  ----------*/
+    ctrl.checkSelectedProperties = function () {
+      ctrl.allSelectedArr = [];
+      ctrl.mapId = null;
+      ctrl.discountOfferPct = 0;
+      angular.forEach(ctrl.product.properties, function (i) {
+        if (i.selectedPropertyId) {
+          ctrl.allSelectedArr.push(i.selectedPropertyId.toString());
+        }
+      });
+      if (ctrl.allSelectedArr.length === ctrl.product.properties.length) {
+        ctrl.allSelected = true;
+        ctrl.setPrice();
+      }
+    };
+
+    ctrl.setPrice = function () {
+      if (ctrl.allSelected) {
+        if (ctrl.product.properties.length === 0) {
+          // $log.log('============================ START ==============================');
+          // $log.log('ADD TO CART');
+          // $log.log('============================= END ===============================');
+        }
+        angular.forEach(ctrl.product.propertiesMapDto, function (p) {
+          var pv = p.propertyvalueComposition;
+          var pvArr = pv.split('_');
+          var commonArr = [];
+          angular.forEach(pvArr, function (a) {
+            angular.forEach(ctrl.allSelectedArr, function (b) {
+              if (a === b) {
+                commonArr.push(a);
+              }
+            });
+          });
+          //pvArr.splice(- 1, 1);
+          $log.log('============================ START ==============================');
+          $log.log(ctrl.allSelectedArr.toString());
+          $log.log(pvArr.toString());
+          $log.log(commonArr.toString());
+          $log.log('============================= END ===============================');
+          if (ctrl.allSelectedArr.length === commonArr.length) {
+            ctrl.product.salesPrice = p.salesPrice;
+            ctrl.mapId = p.mapId;
+            ctrl.discountOfferPct = 0;
+          }
+        });
+        // if ()
+      }
+    };
+    /*==================================================
+    End: Property List
+    ==================================================*/
+
+    /*==================================================
+    Section: Slider button to navigate throuh images
+    ==================================================*/
     ctrl.slideIndex = 0;
     ctrl.nextSlide = function () {
       $ionicSlideBoxDelegate.next();
@@ -94,12 +183,12 @@ angular
       ctrl.slideIndex = index;
     };
     /*==================================================
-  End: Slider button to navigate throuh images
-  ==================================================*/
+    End: Slider button to navigate throuh images
+    ==================================================*/
 
     /*==========================================================================================
-  =            Helping functions to traverse through tabs in product details page            =
-  ==========================================================================================*/
+    =            Helping functions to traverse through tabs in product details page            =
+    ==========================================================================================*/
 
     ctrl.gotoDescription = function () {
       $log.log(ctrl.productId);
@@ -113,8 +202,8 @@ angular
     /*=====  End of Helping functions to traverse through tabs in product details page  ======*/
 
     /*=================================================
-  =            Add a product to the cart            =
-  =================================================*/
+    =            Add a product to the cart            =
+    =================================================*/
 
     /*----------  Add to cart - get triggered when user press "Add to Bag" button from the product detail page ----------*/
 
@@ -170,6 +259,50 @@ angular
         .catch(function (response) {
           $log.log(response);
         });
+    };
+
+    ctrl.addToBagNew = function (product) {
+      if (ctrl.allSelected) {
+        var productSelected = {};
+        productSelected.mapId = ctrl.mapId;
+        productSelected.discountOfferPct = ctrl.discountOfferPct;
+        Store.addToCart(productSelected)
+          .then(function (response) {
+            $log.log(response.data);
+            if (response.data.status === 'success') {
+              productSelected.response = 'Item Added to your Bag!';
+              ctrl.openModal(productSelected, product);
+              $rootScope.$emit('getCartTotalNumber');
+            } else if (response.data.status === 'Product already added') {
+              productSelected.response = 'Item is already in the Bag!';
+              ctrl.openModal(productSelected, product);
+            } else {
+              ctrl.showAlert = function () {
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Out of Stock',
+                  template: 'Oops! You just missed the last item in stock. It got sold out. Hurry up and purchase the items you like before they get sold out too.'
+                });
+
+                alertPopup.then(function () {
+                  $state.go('store.products.latest');
+                });
+              };
+              ctrl.showAlert();
+            }
+          })
+          .catch(function (response) {
+            $log.log(response);
+          });
+        // $log.log('============================ START ==============================');
+        // $log.log('ADD TO CART');
+        // $log.log('============================= END ===============================');
+
+      } else {
+        $ionicPopup.alert({
+          title: 'Choose options',
+          template: 'Please choose all the options'
+        });
+      }
     };
 
     /*----------  Ionic modal to show the response of addition of the product to the cart  ----------*/
@@ -236,52 +369,6 @@ angular
     ctrl.colorModal = function () {
       ctrl.colorName = ctrl.productSelected.size.sizeColorMap;
       ctrl.colormodal.show();
-
-      // var buttons = [];
-
-      // angular.forEach(ctrl.productSelected.size.sizeColorMap, function (value) {
-
-      //   buttons.push({ text: value.colorText });
-
-      // });
-
-      // $ionicActionSheet.show({
-
-      //   buttons: buttons,
-
-      //   titleText: 'Select color',
-
-      //   cancelText: 'Cancel',
-
-      //   cancel: function () {
-
-      //     // add cancel code..
-
-      //   },
-
-      //   buttonClicked: function (index) {
-
-      //     // $log.log(index);
-
-      //     // $log.log(ctrl.productSelected.size.sizeColorMap[index]);
-
-      //     ctrl.productSelected.size.sizeColor =
-
-      //       ctrl.productSelected.size.sizeColorMap[index];
-
-      //     ctrl.productSelected.mapId =
-
-      //       ctrl.productSelected.size.sizeColor.mapId;
-
-      //     // $log.log(ctrl.productSelected.mapId);
-
-      //     ctrl.addToBagPersist(ctrl.productSelected, ctrl.product);
-
-      //     return true;
-
-      //   }
-
-      // });
     };
 
     ctrl.colorSelected = function (index) {

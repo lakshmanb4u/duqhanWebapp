@@ -4,7 +4,85 @@
     <div class="notification animated bounceInDown" ng-show="ctrl.notification.type" ng-class="{'success': ctrl.notification.type == 'success' , 'failure': ctrl.notification.type == 'failure'}">{{ctrl.notification.text}}</div>
 
     <!-- content goes here -->
-    <ion-list class="list-inset">
+    <div class="card">
+      <div class="row">
+        <div class="col col-60">
+          <div class="slider-wrapper" style="width: 360px;">
+            <ion-slide-box does-continue="true" auto-play="true" show-pager="false">
+              <ion-slide>
+                <div class="box blue">
+                  <div class="discount">
+                    <p>
+                      <span>Rs.188</span> Rs.170
+                      <em>10% discount</em>
+                    </p>
+                  </div>
+                  <img src="https://storage.googleapis.com/duqhan-images/xkudm9coyg7xyznf7u1a.jpg" width="360" height="360" />
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="box yellow">
+                  <div class="discount">
+                    <p>
+                      <span>Rs.157</span> Rs.140
+                      <em>11% discount</em>
+                    </p>
+                  </div>
+                  <img src="https://storage.googleapis.com/duqhan-images/lrsa3igarnrc92lum9yw.jpg" width="360" height="360" />
+                </div>
+              </ion-slide>
+              <ion-slide>
+                <div class="box pink">
+                  <div class="discount">
+                    <p>
+                      <span>Rs.168</span> Rs.130
+                      <em>23% discount</em>
+                    </p>
+                  </div>
+                  <img src="https://storage.googleapis.com/duqhan-images/w31dfbjephujejjnlpuv.jpg" width="360" height="360" />
+                </div>
+              </ion-slide>
+            </ion-slide-box>
+          </div>
+        </div>
+        <div class="col col-40">
+          <ion-list class="list-inset split-window">
+            <ion-item class="item">
+              <div class="text-center">
+                <img class="logo" src="main/assets/images/logo.png" style="width: 56px; height: 55px">
+                <p class="logo-text">Duqhan</p>
+              </div>
+            </ion-item>
+            <ion-item class="text-center sub-text">
+              <h2>Sign in to browse products!</h2>
+            </ion-item>
+            <ion-item class="item item-button">
+              <button class="button icon-left ion-social-facebook button-block button-facebook" ng-click="ctrl.facebookLogin()">
+                Sign in with Facebook
+              </button>
+              <p class="text-center">or</p>
+              <button class="button button-block button-energized" ui-sref="login">
+                Login with email
+              </button>
+            </ion-item>
+            <ion-item class="item item-divider">
+              <div class="separator"></div>
+              <div class="separator-text">or</div>
+              <div class="separator"></div>
+            </ion-item>
+            <ion-item class="item text-center play-btn">
+              <a href="https://play.google.com/store/apps/details?id=com.duqhan.app" target="_blank">
+                <img src="auth/assets/images/playstore.png" />
+              </a>
+            </ion-item>
+            <ion-item class="item text-center">
+              <img src="auth/assets/images/pp.png" style="width: 60%;" />
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    <!-- <ion-list class="list-inset">
       <ion-item class="item">
         <div class="text-center">
           <img class="logo" src="main/assets/images/logo.png" style="width: 56px; height: 55px">
@@ -26,7 +104,7 @@
           Login
         </button>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
 
   </ion-content>
   <div ng-include="'auth/templates/footer.html'"></div>

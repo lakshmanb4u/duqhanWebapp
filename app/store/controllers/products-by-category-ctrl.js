@@ -8,6 +8,8 @@ angular
     $rootScope,
     $scope,
     $ionicScrollDelegate,
+    $ionicSideMenuDelegate,
+    $ionicSlideBoxDelegate,
     Product,
     Config,
     BusyLoader
@@ -21,6 +23,8 @@ angular
 
     var ctrl = this;
 
+    $ionicSideMenuDelegate.canDragContent(false);
+
     /*----------  Storing url parameter (product id) in scope ----------*/
 
     ctrl.categoryId = $stateParams.categoryId;
@@ -31,6 +35,25 @@ angular
     ctrl.start = 0;
     ctrl.page = 0;
     ctrl.noMoreItemsAvailable = false;
+    ctrl.initialize = false;
+
+    /*==================================================
+    Section: Slider button to navigate throuh images
+    ==================================================*/
+    ctrl.swiper = {};
+    $scope.next = function () {
+      ctrl.swiper.slideNext();
+    };
+    $scope.onReadySwiper = function (swiper) {
+      $log.log('onReadySwiper');
+      swiper.on('slideChangeStart', function () {
+        $log.log('slideChangeStart');
+        // ctrl.swiper.initObservers();
+      });
+    };
+    /*==================================================
+    End: Slider button to navigate throuh images
+    ==================================================*/
 
     /*=================================================
   =            Show products by category            =
@@ -39,6 +62,7 @@ angular
     /*----------  Get products by category  ----------*/
 
     ctrl.loadProductListByCategory = function () {
+      ctrl.showStatus = false;
       var productsParam = {
         start: ctrl.start + ctrl.page * Config.ENV.PRODUCTS_PER_PAGE,
         limit: Config.ENV.PRODUCTS_PER_PAGE,
@@ -61,6 +85,7 @@ angular
           }
           ctrl.productCategory = data.categoryName;
           BusyLoader.hide();
+          ctrl.showStatus = true;
         })
         .catch(function (response) {
           $log.log(response);
@@ -79,24 +104,11 @@ angular
       }
     };
 
-    /*----------  call the function at the time of initialization  ----------*/
-
-    if ($state.current.name === 'store.productsByCategory') {
-      ctrl.loadProductListByCategory();
-    }
-
-    /*----------  Get the products depending on which page user is in  ----------*/
-
-    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
-      $ionicScrollDelegate.scrollTop();
-      ctrl.products = [];
-      ctrl.start = 0;
-      ctrl.page = 0;
-      ctrl.noMoreItemsAvailable = false;
-      if (toState.name === 'store.productsByCategory') {
-        ctrl.loadProductListByCategory();
+    ctrl.goToProductDetailsPage = function (evt, productId) {
+      if (evt.which === 1) {
+        $state.go('store.product.overview', { productId: productId });
       }
-    });
+    };
 
     /*=====  End of Show products by category  ======*/
 
@@ -108,6 +120,7 @@ angular
       Product.getChildCategories(ctrl.categoryId)
         .then(function (categories) {
           ctrl.categories = categories;
+          ctrl.swiper.initObservers();
         })
         .catch(function (response) {
           $log.log(response);
@@ -119,6 +132,31 @@ angular
     if ($state.current.name === 'store.categories') {
       ctrl.loadChildCategories();
     }
+
+    /*----------  call the function at the time of initialization  ----------*/
+
+    if ($state.current.name === 'store.productsByCategory') {
+      if (!ctrl.initialize) {
+        ctrl.initialize = true;
+        ctrl.loadProductListByCategory();
+        ctrl.loadChildCategories();
+      }
+    }
+
+    /*----------  Get the products depending on which page user is in  ----------*/
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState) {
+      $ionicScrollDelegate.scrollTop();
+      ctrl.products = [];
+      ctrl.start = 0;
+      ctrl.page = 0;
+      ctrl.noMoreItemsAvailable = false;
+      if (toState.name === 'store.productsByCategory') {
+        ctrl.initialize = true;
+        ctrl.loadProductListByCategory();
+        ctrl.loadChildCategories();
+      }
+    });
 
     /*=====  End of Show category list page  ======*/
   });

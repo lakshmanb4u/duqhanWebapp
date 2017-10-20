@@ -10,6 +10,7 @@ angular
     $state,
     $localStorage,
     $window,
+    $ionicPopup,
     Store
   ) {
     $log.log(
@@ -36,8 +37,8 @@ angular
       ctrl.cart.orderTotal + ctrl.cart.shippingTotal;
 
     /*===========================================
-  =            Get default address            =
-  ===========================================*/
+    =            Get default address and email            =
+    ===========================================*/
 
     ctrl.getDefaultAddress = function () {
       Store.getDefaultAddress()
@@ -52,17 +53,24 @@ angular
           } else {
             ctrl.address = null;
           }
+          return Store.getUserEmailAndPhone();
+        })
+        .then(function (response) {
+          $log.log('getUserEmailAndPhone');
+          $log.log(response.data);
+          ctrl.userEmail = response.data.email;
+          ctrl.mobile = response.data.mobile;
         })
         .catch(function (error) {
           $log.log(error);
         });
     };
 
-    /*=====  End of Get default address  ======*/
+    /*=====  End of Get default address and email  ======*/
 
     /*======================================================
-  =            Get the shipping cost and time            =
-  ======================================================*/
+    =            Get the shipping cost and time            =
+    ======================================================*/
 
     ctrl.getShippingDetails = function (cart) {
       $log.log(cart);
@@ -103,8 +111,8 @@ angular
     });
 
     /*===============================================
-  =            Change delivery address            =
-  ===============================================*/
+    =            Change delivery address            =
+    ===============================================*/
 
     ctrl.addressSelectionError = true;
 
@@ -156,13 +164,78 @@ angular
     /*=====  End of Change delivery address  ======*/
 
     /*=======================================
-  =            Payment section            =
-  =======================================*/
+    =            Set Email Address            =
+    =======================================*/
+
+    ctrl.setUserEmailAndPhone = function (email, phone) {
+      ctrl.data = {};
+      ctrl.data.email = email;
+      ctrl.data.mobile = phone;
+      $log.log(ctrl.data);
+      var template = [];
+      if (!email) {
+        template.push('<input type="email" ng-model="ctrl.data.email" placeholder="Email Id" style="padding: 2px 5px; margin-bottom: 10px;">');
+      }
+      if (!phone) {
+        template.push('<input type="text" ng-model="ctrl.data.mobile" placeholder="Phone Number" style="padding: 2px 5px;">');
+      }
+      var str = template.join('');
+      $ionicPopup.show({
+        template: str,
+        title: 'Contact',
+        subTitle: 'Please enter contact details to continue',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Save',
+            type: 'button-positive',
+            onTap: function (e) {
+              if (!ctrl.data.email || !ctrl.data.mobile) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                $log.log(ctrl.data);
+                Store.setUserEmailAndPhone(ctrl.data)
+                  .then(function (response) {
+                    $log.log('setUserEmail');
+                    if (response && response.data && response.data.email && response.data.mobile) {
+                      ctrl.userEmail = response.data.email;
+                      ctrl.mobile = response.data.mobile;
+                      ctrl.pay();
+                    } else {
+                      var notification = {};
+                      notification.type = 'failure';
+                      notification.text = 'Something went wrong! Please try again.';
+                      $rootScope.$emit('setNotification', notification);
+                    }
+                  })
+                  .catch(function (error) {
+                    $log.log(error);
+                  });
+              }
+            }
+          }
+        ]
+      });
+    };
+
+    /*=====  End of Set Email Address  ======*/
+
+    /*=======================================
+    =            Payment section            =
+    =======================================*/
+
+    ctrl.selectPaymentGateway = function () {
+      ctrl.cart.paymentGateway = 2;
+      ctrl.paymentGatewayModal.show();
+    };
 
     ctrl.isPayPalBrowserOpen = false;
     ctrl.pay = function () {
       $log.log(ctrl.cart);
       $log.log(ctrl.address);
+      ctrl.closePaymentGatewayModal();
       if (!ctrl.address) {
         var notification = {};
         notification.type = 'failure';
@@ -170,16 +243,52 @@ angular
         $rootScope.$emit('setNotification', notification);
         return;
       }
+      if (!ctrl.userEmail || !ctrl.mobile) {
+        $log.log('email not found');
+        ctrl.setUserEmailAndPhone(ctrl.userEmail, ctrl.mobile);
+        return;
+      }
       ctrl.cart.deliveryAddressId = ctrl.address.addressId;
       ctrl.cart.addressDto = ctrl.address;
+
+      //Only for web
+      ctrl.cart.appType = 2;
 
       Store.checkout(ctrl.cart)
         .then(function (response) {
           $log.log('response ==');
           $log.log(response.data.status);
           ctrl.payKey = response.data.statusCode;
+          var paymentUrl = response.data.paymentUrl;
           $localStorage.duqhanPayKey = ctrl.payKey;
-          $window.location.href = response.data.status;
+          if (ctrl.cart.paymentGateway === 2) {
+            var options = response.data.parameters;
+            var url = paymentUrl;
+            for (var key in options) {
+              if (options.hasOwnProperty(key)) {
+                $log.log(key + ' -> ' + options[key]);
+                if (url === paymentUrl) {
+                  key === 'CHECKSUMHASH' ?
+                    (url +=
+                      '?' +
+                      key +
+                      '=' +
+                      window.encodeURIComponent(options[key])) :
+                    (url += '?' + key + '=' + options[key]);
+                } else {
+                  key === 'CHECKSUMHASH' ?
+                    (url +=
+                      '&' +
+                      key +
+                      '=' +
+                      window.encodeURIComponent(options[key])) :
+                    (url += '&' + key + '=' + options[key]);
+                }
+              }
+            }
+            paymentUrl = url + '&APPTYPE=' + ctrl.cart.paymentGateway;
+          }
+          $window.location.href = paymentUrl;
         })
         .catch(function (error) {
           $log.log(error);
@@ -189,8 +298,8 @@ angular
     /*=====  End of Payment section  ======*/
 
     /*===============================================
-  =            Modal related functions            =
-  ===============================================*/
+    =            Modal related functions            =
+    ===============================================*/
 
     $ionicModal
       .fromTemplateUrl('select-address-modal.html', {
@@ -203,6 +312,19 @@ angular
 
     ctrl.closeModal = function () {
       ctrl.modal.hide();
+    };
+
+    $ionicModal
+      .fromTemplateUrl('store/templates/select-payment-gateway.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      })
+      .then(function (modal) {
+        ctrl.paymentGatewayModal = modal;
+      });
+
+    ctrl.closePaymentGatewayModal = function () {
+      ctrl.paymentGatewayModal.hide();
     };
 
     // Cleanup the modal when we're done with it!

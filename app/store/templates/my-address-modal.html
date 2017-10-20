@@ -4,7 +4,7 @@
     <ion-header-bar class="bar-energized">
       <h1 class="title">Add new address</h1>
     </ion-header-bar>
-    <ion-content class="padding has-footer">
+    <ion-content class="padding has-footer" overflow-scroll="true">
       <ion-item class="item item-input" ng-class="{ 'has-errors' : ctrl.addAddressForm.contactName.$invalid, 'no-errors' : ctrl.addAddressForm.contactName.$valid}">
         <input name="contactName" type="text" placeholder="Contact Name" ng-model="ctrl.addressDTO.contactName" required="">
       </ion-item>

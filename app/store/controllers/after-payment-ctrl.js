@@ -6,6 +6,8 @@ angular
     $localStorage,
     $state,
     $rootScope,
+    $analytics,
+    // $cordovaFacebook,
     Store,
     BusyLoader
   ) {
@@ -27,6 +29,7 @@ angular
           $rootScope.$emit('getCartTotalNumber');
           var notification = {};
           if (response.data.status === 'approved') {
+            $analytics.eventTrack('Purchase', { currency: 'INR', value: response.data.statusCode });
             $state.go('store.orderhistory');
             notification.type = 'success';
             notification.text = 'Item purchased successfully.';

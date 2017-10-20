@@ -1,19 +1,27 @@
 <ion-view view-title="Duqhan">
   <ion-pane class="product-by-category-pane">
-    <ion-content class="padding products-tab-content">
+    <ion-content class="padding products-tab-content" overflow-scroll="true">
 
       <!-- content goes here -->
       <div class="card category-card">
         <div class="item item-text-wrap">
-          {{ctrl.productCategory}}
-          <div class="category-link" ui-sref="store.categories({categoryId: ctrl.categoryId})">Other categories</div>
+          {{ctrl.productCategory || 'Category'}}
+          <!-- <div class="category-link" ui-sref="store.categories({categoryId: ctrl.categoryId})">Other categories</div> -->
         </div>
       </div>
       <!-- <div class="row p-l-n p-r-n products-row" masonry item-selector=".m-product" load-images="false" >
         <div class="col col-50 m-product" ng-repeat="p in ctrl.products" masonry-brick> -->
+
+      <div class="category-slides" ng-if="ctrl.categories">
+        <ks-swiper-container swiper="ctrl.swiper" loop="false" show-nav-buttons="true" slides-per-view="4" space-between="5" on-ready="onReadySwiper(swiper)">
+          <ks-swiper-slide ng-repeat="c in ctrl.categories" ui-sref="store.productsByCategory({categoryId: c.categoryId})" >
+            {{c.categoryName}}
+          </ks-swiper-slide>
+        </ks-swiper-container>
+      </div>
       <div class="row p-l-n p-r-n products-row responsive-lg">
         <div class="col col-20 m-product" ng-repeat="p in ctrl.products">
-          <div class="product-preview" ui-sref="store.product.overview({productId: p.productId})">
+          <div class="product-preview"  ng-mousedown="ctrl.goToProductDetailsPage($event,p.productId)">
             <span class="discount">{{p.discountPCT| number : 0}}%</span>
             <div class="item-image">
               <img src="{{p.imgurl || 'store/assets/images/default.jpg' | cloudinaryThumbTransformation}}">
@@ -30,9 +38,14 @@
           </div>
         </div>
       </div>
+      <div class="card" ng-show="ctrl.products.length === 0 && ctrl.showStatus">
+        <div class="item item-text-wrap">
+          No products available.
+        </div>
+      </div>
       <div class="card" ng-hide="ctrl.products">
         <div class="item item-text-wrap">
-          No more subcategory available. 
+          No more subcategory available.
         </div>
       </div>
       <div class="p-lg"></div>
