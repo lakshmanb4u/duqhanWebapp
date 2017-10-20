@@ -93,7 +93,8 @@ angular.module('main').controller('UserCtrl', function (
         $rootScope.$emit('setUserDetailForMenu');
         $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
         if (ctrl.savedUser.freeProductEligibility) {
-          $state.go('store.freeProducts');
+          // $state.go('store.freeProducts');
+          $state.go('store.products.latest');
         } else {
           $state.go('store.products.latest');
         }
@@ -133,7 +134,6 @@ angular.module('main').controller('UserCtrl', function (
     //   // return Auth.facebookLogin();
     // });
 
-    
     Auth.facebookLogin()
       .then(function (facebook) {
         $log.log('FB data ================');
@@ -173,7 +173,8 @@ angular.module('main').controller('UserCtrl', function (
           $analytics.eventTrack('CompleteRegistration');
         }
         if (ctrl.savedUser.freeProductEligibility) {
-          $state.go('store.freeProducts');
+          // $state.go('store.freeProducts');
+          $state.go('store.products.latest');
         } else {
           $state.go('store.products.latest');
         }
@@ -203,46 +204,52 @@ angular.module('main').controller('UserCtrl', function (
     $log.log(parsedUser);
 
     if (parsedUser.socialLogin) {
-      var fbUser = {};
-      var img = null;
+      // var fbUser = {};
+      // var img = null;
       Auth.isLoggedIn()
-        .then(function (response) {
-          fbUser.email = response.email;
-          fbUser.name = response.displayName;
-          fbUser.fbid = response.providerId;
-          img = response.photoURL;
-          Firebase.includeFCMToken(fbUser)
-            .then(function (fbUser) {
-              return Auth.fbLogin(fbUser);
-            })
-            .then(function (response) {
-              $log.log(response);
-              ctrl.savedUser.email = fbUser.email;
-              ctrl.savedUser.name = fbUser.name;
-              ctrl.savedUser.userId = fbUser.fbid;
-              ctrl.savedUser.profileImage = response.data.profileImg ? response.data.profileImg : img;
-              ctrl.savedUser.freeProductEligibility = response.data.freeProductEligibility;
-              ctrl.savedUser.authtoken = response.data.authtoken;
-              ctrl.savedUser.mobile = response.data.mobile;
-              ctrl.savedUser.socialLogin = true;
-              Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
-              Config.ENV.USER.NAME = response.data.name;
-              Config.ENV.USER.PROFILE_IMG = ctrl.savedUser.profileImage;
-              $rootScope.$emit('setUserDetailForMenu');
-              $log.log('FB picture ================');
-              $log.log(img);
-              $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
-              if (ctrl.savedUser.freeProductEligibility) {
-                $state.go('store.freeProducts');
-              } else {
-                $state.go('store.products.latest');
-              }
-            })
-            .catch(function (error) {
-              $log.log(error);
-              $localStorage.$reset();
-              $state.go('landing');
-            });
+        .then(function () {
+          if (parsedUser.freeProductEligibility) {
+            // $state.go('store.freeProducts');
+            $state.go('store.products.latest');
+          } else {
+            $state.go('store.products.latest');
+          }
+          // fbUser.email = response.email;
+          // fbUser.name = response.displayName;
+          // fbUser.fbid = response.providerId;
+          // img = response.photoURL;
+          // Firebase.includeFCMToken(fbUser)
+          //   .then(function (fbUser) {
+          //     return Auth.fbLogin(fbUser);
+          //   })
+          //   .then(function (response) {
+          //     $log.log(response);
+          //     ctrl.savedUser.email = fbUser.email;
+          //     ctrl.savedUser.name = fbUser.name;
+          //     ctrl.savedUser.userId = fbUser.fbid;
+          //     ctrl.savedUser.profileImage = response.data.profileImg ? response.data.profileImg : img;
+          //     ctrl.savedUser.freeProductEligibility = response.data.freeProductEligibility;
+          //     ctrl.savedUser.authtoken = response.data.authtoken;
+          //     ctrl.savedUser.mobile = response.data.mobile;
+          //     ctrl.savedUser.socialLogin = true;
+          //     Config.ENV.USER.AUTH_TOKEN = response.data.authtoken;
+          //     Config.ENV.USER.NAME = response.data.name;
+          //     Config.ENV.USER.PROFILE_IMG = ctrl.savedUser.profileImage;
+          //     $rootScope.$emit('setUserDetailForMenu');
+          //     $log.log('FB picture ================');
+          //     $log.log(img);
+          //     $localStorage.savedUser = JSON.stringify(ctrl.savedUser);
+          //     if (ctrl.savedUser.freeProductEligibility) {
+          //       $state.go('store.freeProducts');
+          //     } else {
+          //       $state.go('store.products.latest');
+          //     }
+          //   })
+          //   .catch(function (error) {
+          //     $log.log(error);
+          //     $localStorage.$reset();
+          //     $state.go('landing');
+          //   });
         })
         .catch(function (error) {
           $log.log(error);

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('store')
-  .controller('FreeProductCtrl', function ($log, $ionicSlideBoxDelegate, $stateParams, $ionicActionSheet, $ionicModal, $rootScope, $ionicPopup, $scope, $state, $cordovaFacebook, $analytics, BusyLoader, Store) {
+  .controller('FreeProductCtrl', function ($log, $ionicSlideBoxDelegate, $stateParams, $ionicActionSheet, $ionicModal, $rootScope, $ionicPopup, $scope, $state, $cordovaFacebook, $analytics, $localStorage, BusyLoader, Store) {
 
     $log.log('Hello from your Controller: FreeProductCtrl in module store:. This is your controller:', this);
 
@@ -253,11 +253,10 @@ angular.module('store')
     ==================================================*/
 
     /*==================================================
-    Section: Purch free product
+    Section: Purchase free product
     ==================================================*/
 
     ctrl.purchaseFreeProduct = function () {
-      $log.log(ctrl.cart);
       Store.purchaseFreeProduct(ctrl.cart)
         .then(function (response) {
           $log.log(response);
@@ -269,6 +268,10 @@ angular.module('store')
             $cordovaFacebook.logPurchase(0, 'INR');
             $analytics.eventTrack('Purchase', { currency: 'INR', value: 0 });
             $rootScope.$emit('setNotification', notification);
+            var savedUser = $localStorage.savedUser;
+            var parsedUser = JSON.parse(savedUser);
+            parsedUser.freeProductEligibility = true;
+            $localStorage.savedUser = JSON.stringify(parsedUser);
           } else if (response.data.statusCode === '208') {
             $state.go('store.products.latest');
             // eslint-disable-next-line no-redeclare
@@ -284,7 +287,7 @@ angular.module('store')
     };
 
     /*==================================================
-    End: Purch free product
+    End: Purchase free product
     ==================================================*/
 
     /*==================================================

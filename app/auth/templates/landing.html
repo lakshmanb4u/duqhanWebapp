@@ -1,6 +1,6 @@
 <ion-view view-title="Duqhan">
   <!-- do you want padding? -->
-  <ion-content class="padding landing has-footer" >
+  <ion-content class="padding landing has-footer">
     <div class="notification animated bounceInDown" ng-show="ctrl.notification.type" ng-class="{'success': ctrl.notification.type == 'success' , 'failure': ctrl.notification.type == 'failure'}">{{ctrl.notification.text}}</div>
 
     <!-- content goes here -->
@@ -12,7 +12,10 @@
               <ion-slide>
                 <div class="box blue">
                   <div class="discount">
-                    <p><span>Rs.188</span> Rs.170 <em>10% discount</em></p>
+                    <p>
+                      <span>Rs.188</span> Rs.170
+                      <em>10% discount</em>
+                    </p>
                   </div>
                   <img src="https://storage.googleapis.com/duqhan-images/xkudm9coyg7xyznf7u1a.jpg" width="360" height="360" />
                 </div>
@@ -20,7 +23,10 @@
               <ion-slide>
                 <div class="box yellow">
                   <div class="discount">
-                    <p><span>Rs.157</span> Rs.140 <em>11% discount</em></p>
+                    <p>
+                      <span>Rs.157</span> Rs.140
+                      <em>11% discount</em>
+                    </p>
                   </div>
                   <img src="https://storage.googleapis.com/duqhan-images/lrsa3igarnrc92lum9yw.jpg" width="360" height="360" />
                 </div>
@@ -28,7 +34,10 @@
               <ion-slide>
                 <div class="box pink">
                   <div class="discount">
-                    <p><span>Rs.168</span> Rs.130 <em>23% discount</em></p>
+                    <p>
+                      <span>Rs.168</span> Rs.130
+                      <em>23% discount</em>
+                    </p>
                   </div>
                   <img src="https://storage.googleapis.com/duqhan-images/w31dfbjephujejjnlpuv.jpg" width="360" height="360" />
                 </div>
@@ -49,8 +58,12 @@
             </ion-item>
             <ion-item class="item item-button">
               <button class="button icon-left ion-social-facebook button-block button-facebook" ng-click="ctrl.facebookLogin()">
-                  Sign in with Facebook
-                </button>
+                Sign in with Facebook
+              </button>
+              <p class="text-center">or</p>
+              <button class="button button-block button-energized" ui-sref="login">
+                Login with email
+              </button>
             </ion-item>
             <ion-item class="item item-divider">
               <div class="separator"></div>

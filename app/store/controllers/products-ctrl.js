@@ -69,8 +69,8 @@ angular
     };
 
     ctrl.goToProductDetailsPage = function (evt, productId) {
-      if(evt.which === 1){
-          $state.go('store.product.overview', { productId: productId });
+      if (evt.which === 1) {
+        $state.go('store.product.overview', { productId: productId });
       }
     };
 
