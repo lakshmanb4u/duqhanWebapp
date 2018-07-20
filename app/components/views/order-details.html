@@ -1,0 +1,65 @@
+
+  <div class="container-fluid">
+    <div>
+      <div class="container return-button-order-page" id="full">
+        <div class="order">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="order-id" style="font-size: 20px;">
+                <p><b>Order ID {{ctrl.order.orderId}}</b></p>
+                <p>Placed on {{ctrl.order.orderDateTime | date:"EEE,dd 'th' MMM yy 'at' hh:mm"}} {{ctrl.order.orderDateTime | date:"a"| lowercase}}</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="product-img">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="product">
+                <img src="{{ctrl.order.prodImg}}">
+              </div>  
+            </div>
+            <div class="col-md-9">
+              <div class="product-desc">
+                <div class="text" style="font-size: 17px;"><b>{{ctrl.order.productName}}</b></div>
+                <div class="clearfix"></div>
+                <p style="color:#21b973;font-size: 16px;text-transform: capitalize;">{{ctrl.order.status}}</p>
+                <div class="return-date">
+                  <p><b>{{ctrl.order.orderDateTime | date:"EEE,dd 'th' MMM yy"}}</b>&nbsp;&nbsp;&nbsp;&nbsp;<span>Qty:&nbsp;{{ctrl.order.quty}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="rupy">{{ctrl.order.paymentAmount * ctrl.order.quty | currencySymbol:ctrl.order.symbol}} </span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="discounted-price" style="text-decoration: line-through;">{{ctrl.order.price * ctrl.order.quty}}</span>
+                </div>
+
+              </div>
+                
+            </div>
+          </div>
+        </div>
+        <div class="container my-address" style="margin-left: 25%;padding-top: 0;height: auto;">
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="contact">
+                      <!-- <p>Where you can find us?</p> -->
+                        <div class="address">
+                           <p><span>Delivery Address</span></p>
+                            <address>
+                                <b>{{ctrl.order.addressDto.contactName}}</b><br/>
+                                {{ctrl.order.addressDto.streetOne}} {{ctrl.order.addressDto.streetTwo}}<br/>
+                                {{ctrl.order.addressDto.city}} - {{ctrl.order.addressDto.zipCode}} <br/>
+                                {{ctrl.order.addressDto.phone}}<br/>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+        </div> 
+        </div>       
+        <button ng-if="ctrl.order.status === 'approved' || ctrl.order.status === 'shipped' || ctrl.order.status === 'order placed' || ctrl.order.status === 'order confirmed' || ctrl.order.status === 'created'" class="btn" style="background: #000;margin-left: 45%;" ng-click="ctrl.cancelOrder(ctrl.order.orderId)">Cancel Order</button>
+            <button ng-if="ctrl.order.status === 'delivered' && ctrl.order.orderId !== 'Free Product'" class="btn" style="background: #000;margin-left: 45%;" ng-click="ctrl.gotoRetunOrder()">Return Order</button>
+        <p style="margin-left: 42%;color: green;"><b>{{ctrl.cancelOrdMsg}}</b></p>
+
+  
+    </div>
+  </div>

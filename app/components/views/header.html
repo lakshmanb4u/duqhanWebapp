@@ -1,0 +1,158 @@
+ <nav class="navbar navbar-default navbar-fixed-top navbar-main-start" style="border: none;">
+         <div class="welocome-div">
+            <div class="container">
+               <div class="col-md-6 col-sm-4">
+                  <p class="p-text">Welcome to Duqhan</p>
+               </div>
+               <div class="col-md-6 col-sm-8">
+                  <div >
+                     <div class="main-section-link">
+                        <div class="social-links">
+                           <ul>
+                              <li ><a href="#"><i class="fa fa-google-plus-square" style="margin:0px"></i></a></li>
+                              <li ><a href="https://www.facebook.com/Duqhaan/" target="_blank"><i class="fa fa-facebook-square" style="margin:0px"></i></a></li>
+                              <li><a href="https://twitter.com/duqhanapp" target="_blank"><i class="fa fa-twitter-square" style="margin:0px"></i></a></li>
+                              <li ><a href="#"><i class="fa fa-youtube" style="margin:0px"></i></a></li>
+                           </ul>
+                        </div>
+                        <div class="dp-button">
+                           <div class="dropdown">
+                              <span class="dropdown-toggle"  data-toggle="dropdown">My Account
+                              <span class="caret"></span></span>
+                              <ul class="dropdown-menu">
+                                 <li><a ng-if="menu.guest" ui-sref="store.profile">My profile</a></li>
+                                 <li><a ng-if="menu.guest" ui-sref="store.myaddress"">My address</a></li>
+                                 <li><a ng-if="menu.guest" ui-sref="store.mycart">My cart</a></li>
+                                 <li><a ng-if="menu.guest" ui-sref="store.orderhistory">My orders</a></li> 
+                                 <li><a ng-if="menu.guest" ng-click="menu.logout()" >Log out</a></li>
+                                 <li><a ng-if="!menu.guest" ng-click="menu.login()" >Log In</a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="welocome-div1">
+            <div class="container">
+               <div class="col-md-6 col-sm-3">
+                  <a ui-sref="store" class="navbar-brand" href="#"><img src="resources/images/logo.png" alt="logo" style="width:41px;"/> </a><span ui-sref="store" class="duqhan-text" style="cursor: pointer;">Duqhan</span>
+               </div>
+               <div class="col-md-6 col-sm-9">
+                  <div class="main-section-link1">
+                     <div class="search-siv">
+                        <div >
+                           <div class="input-group stylish-input-group">
+                              <input ng-model="menu.searchText" type="search" id="search" name="search" placeholder="Search Your Product..." auto-complete="menu.autoCompleteOptions" class="form-control" ng-keyup="$event.keyCode == 13 ? menu.callSearchText('search') : null"/>
+                              <span class="input-group-addon">
+                              <button ng-click="menu.callSearchText('search')">
+                              <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                     <div ng-if="menu.guest" ui-sref="store.mycart" class="my-cart" style="cursor: pointer;">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="text-cart">shoping cart</span>
+                        <span class="cart-item">({{menu.cartTotalNumber}})item</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="nav-bar-main">
+            <div class="container">
+               <nav class="navbar navbar-inverse">
+<!-- <div class="dropdown " id="categories-drop" >
+  <a class="cat-btn dropdown-toggle" id="menu1" data-toggle="dropdown">categories<i class="fa fa-bars" aria-hidden="true" style="margin-left: 8px;"></i></a>
+  <ul style="height: 333px;overflow: auto;" class="dropdown-menu  dropdown-menu2 categories">
+        <li class="dropdown-submenu" ng-repeat="category in menu.topLevelMenu"><a ui-sref="store.productsByCategory({categoryId: category.categoryId, otherCategory:''})">
+               <img src="{{category.imgUrl}}" style="height:30px;width:30px;"> &nbsp;&nbsp;&nbsp;&nbsp;{{category.categoryName}}
+             </a><hr style="margin-top:0px;margin-bottom:0px;">
+                  <ul class="dropdown-menu">
+                     <li><a tabindex="-1" href="#">Second level</a></li>
+                     <li><a href="#">Second level</a></li>
+                     <li><a href="#">Second level</a></li>
+                  </ul>
+         </li>
+  </ul>
+</div>  --> 
+                <div class="dropdown" id="categories-drop" >
+                     <a class="cat-btn dropdown-toggle" id="menu1" data-toggle="dropdown">categories<i class="fa fa-bars" aria-hidden="true" style="margin-left: 8px;"></i></a>
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                      <li class="dropdown-submenu multi-li" ng-repeat="category in menu.topLevelMenu">
+                          <a tabindex="-1" ui-sref="store.productsByCategory({categoryId: category.categoryId, otherCategory:''})">
+                          <img src="{{category.imgUrl}}" style="height:30px;width:30px;"> &nbsp;&nbsp;&nbsp;&nbsp;{{category.displayText}}
+                          </a>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-submenu" ng-repeat="subCat in category.subCategories">
+                               <a tabindex="-1" ui-sref="store.productsByCategory({categoryId: subCat.categoryId, otherCategory:''})">
+                               <img src="{{subCat.imgUrl}}" style="height:30px;width:30px;"> &nbsp;&nbsp;&nbsp;&nbsp;{{subCat.displayText}}
+                               </a>
+                                 <ul ng-if="subCat.subCategories.length" class="dropdown-menu">
+                                 <li ng-repeat="secondSubCat in subCat.subCategories">
+                                 <a tabindex="-1" ui-sref="store.productsByCategory({categoryId: secondSubCat.categoryId, otherCategory:''})">
+                                 <!-- <img src="{{secondSubCat.imgUrl}}" style="height:30px;width:30px;"> &nbsp;&nbsp;&nbsp;&nbsp; -->{{secondSubCat.displayText}}
+                                 </a>
+                                 </li>
+                                 </ul>
+                               </li>
+                           </ul>
+                         </li>
+                     </ul>
+                  </div>
+                  <div>
+                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                        </button>
+                     </div>
+                    
+                     <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                           <li><a ui-sref="store" ng-class="{'active': $state.$current.self.url == ''}">Home</a></li>
+                           
+                           <li><a ng-click="menu.gotToCat('popular')" ng-class="menu.getActiveclass('popular', $state.includes('store.productsByCategory'))">best deals</a></li>
+                           <li><a ng-click="menu.gotToCat('latest')" ng-class="menu.getActiveclass('latest', $state.includes('store.productsByCategory'))">latest products</a></li>
+                           <li><a ng-click="menu.gotToCat('recent')" ng-class="menu.getActiveclass('recent', $state.includes('store.productsByCategory'))">recently viewed</a></li>
+                           <li><a ui-sref="store.aboutus" ng-class="{'active': $state.includes('store.aboutus')}">about Duqhan</a></li>
+                           <li><a ui-sref="store.contactus" ng-class="{'active': $state.includes('store.contactus')}">contact</a></li>
+                        </ul>
+                     </div>
+                  </div>
+               </nav>
+            </div>
+         </div>
+      </nav>
+ <script type="text/javascript">
+   $(function(){
+   $(".dropdown").hover(            
+        function() {
+          if(this.id != "categories-drop") {
+              $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+              $(this).toggleClass('open');
+              $('b', this).toggleClass("caret caret-up");   
+            }          
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        });
+   $(".dropdown").click(            
+        function() {
+          $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        });
+   });
+</script>
+<style type="text/css">
+  .multi-level::-webkit-scrollbar { 
+    display: none; 
+}
+</style>

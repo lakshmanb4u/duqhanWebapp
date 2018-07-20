@@ -1,0 +1,80 @@
+<!-- <script>
+ !function(f,b,e,v,n,t,s)
+ {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+ n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+ if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+ n.queue=[];t=b.createElement(e);t.async=!0;
+ t.src=v;s=b.getElementsByTagName(e)[0];
+ s.parentNode.insertBefore(t,s)}(window, document,'script',
+ 'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '171342986896442');
+  fbq('track', 'Search');
+</script> -->
+<noscript><img height="1" width="1" style="display:none"
+ src="https://www.facebook.com/tr?id=171342986896442&ev=PageView&noscript=1"
+/></noscript>
+	<style type="text/css">
+   .product-cart {
+    width: 193px;
+    height: 345px;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+    margin: 0 40px 20px 0;
+    text-align: center;
+    overflow: hidden;
+ } 
+ .latest-section{
+  margin: 40px -41px 0 0;
+ }
+ .product-cart-img{
+  width: 193px;
+    height: 263px;
+    display: block;
+    background-color: transparent;
+    opacity: 1;
+}
+.product-img-div{
+  height: 263px;
+    width: 193px;
+        outline: #eaeaec solid 1px;
+}
+  </style>
+  <div class="container">
+	<div class="latest-section">
+         <!-- <div class="col-md-3" ng-class-odd="'prod-search1'" ng-class-even="'prod-search2'" ng-repeat="product in ctrl.products">
+            <div class="section1">
+               <p class="letest-p">{{product.name}}</p>
+               <div class="image-content"  style="width: 289px;text-align: center;">
+                  <img src="{{product.imgurl || 'resources/images/default.jpg'}}" style="width: 200px;margin: 10px auto;height: 200px">
+               </div>
+               <p class="letest-p">Free shiping | 3-4 weeks delivery</p>
+               <div>
+                  <p class="prod-price letest-p">{{product.discountedPrice | currencySymbol:product.symbol}}</p>
+                  <a ng-mousedown="ctrl.goToProductDetailsPage($event,product.productId)" class=" ship-btn">view details</a>
+                  </div>
+            </div>
+         </div> -->
+          <div class="product-cart" ng-repeat="product in ctrl.products">
+              <a ng-mousedown="ctrl.goToProductDetailsPage($event,product.productId)">
+                  <div class="product-img-div">
+                     <img src="{{product.imgurl || 'resources/images/default.jpg'}}" class="product-cart-img" style="cursor:pointer">
+                  </div>
+                  </a>
+                  <p class="letest-p">{{product.name}}</p>
+                  <p class="letest-p-second">Free shiping | 3-4 weeks delivery</p>
+                  <p><span class="rupy">{{product.discountedPrice | currencySymbol:product.symbol}}&nbsp;&nbsp;</span><span class="line-rupy">{{product.price | currencySymbol:product.symbol}}</span></p>
+              
+            </div>
+    </div>
+    </div>
+      <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="1" immediate-check="false" infinite-scroll-disabled='ctrl.busyLoadingData'></div>
+
+<script type="text/javascript">
+  function filterprice() {
+      document.getElementById("pricefilterDropdown").classList.toggle("show");
+  }
+  function filterctaegory() {
+      document.getElementById("categoryfilterDropdown").classList.toggle("show");
+  }
+</script>

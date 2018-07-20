@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Order History</title>
+</head>
+<body>
+  <div class="container-fluid" style="min-height: 600px;">
+    <div>
+        <h4 ng-if="ctrl.noOrder" style="margin-left: 45%;margin-top: 5%;">{{ctrl.showNoOrders}}</h4>
+      <div class="container return-button-order-page" id="full" style="margin-top: 1%;">
+        <div class="clearfix"></div>
+        <div class="product-img" ng-repeat="order in ctrl.orders">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="product">
+                <img src="{{order.prodImg}}">
+              </div>  
+            </div>
+            <div class="col-md-9">
+              <div class="product-desc">
+                <div class="text" style="font-size: 17px;"><b>{{order.productName}}</b></div>
+                <div class="clearfix"></div><br>
+                <p style="color:#21b973;font-size: 16px;text-transform: capitalize;">{{order.status}}</p>
+                <div class="return-date">
+                  <p><b>{{order.orderDateTime | date:"EEE,dd 'th' MMM yy"}} &nbsp;&nbsp;|</b> &nbsp;&nbsp;<span><a ng-click="ctrl.goToOrderDetails(order)" style="color:#ff771c">More Details</a></span></p>
+                </div>
+
+              </div>
+                
+            </div>
+          </div>
+          <hr ng-show="!$last" style="margin-top: 40px;margin-bottom:0px;">
+        </div>
+        <!--<div class="product-img">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="product">
+                <img src="images/ring2.png">
+              </div>  
+            </div>
+            <div class="col-md-9">
+              <div class="product-desc">
+               <div class="text" style="font-size: 17px;"><b>Fashion Anime Necklace Fairy Tail Gray Fullbuster Blue Crystal Cross Pendant & necklace BLACK ROCK SHOOTER Pentagarm Pendant</b></div>
+                <div class="checkbox">
+                  <input type="checkbox" name="checkbox">
+                </div>
+                <p style="color:#21b973;font-size: 16px;">Delivered</p>
+                <div class="return-date">
+                  <p><b>Sun, 20th Aug 17  |</b> &nbsp;&nbsp;<span style="color:#ff771c">More Details</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-img">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="product">
+                <img src="images/ring3.png">
+              </div>  
+            </div>
+            <div class="col-md-9">
+              <div class="product-desc">
+                <div class="text" style="font-size: 17px;"><b>Fashion Anime Necklace Fairy Tail Gray Fullbuster Blue Crystal Cross Pendant & necklace BLACK ROCK SHOOTER Pentagarm Pendant</b></div>
+                <div class="checkbox">
+                  <input type="checkbox" name="checkbox">
+                </div>
+                <p style="color:#21b973;font-size: 16px;">Delivered</p>
+                <div class="return-date">
+                  <p><b>Sun, 20th Aug 17  |</b> &nbsp;&nbsp;<span style="color:#ff771c">More Details</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>-->
+
+  
+    </div>
+    <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="1" immediate-check="false" infinite-scroll-disabled='ctrl.busyLoadingData'></div>
+  </div>
+
+  
+</body>
+</html>

@@ -1,0 +1,67 @@
+<style>
+     .empty{
+  background: url('resources/images/empty_bg.jpg');
+  background-size: 100% 100%; 
+  height: 412px;
+  margin-top: 40px;
+ }
+ .empty img{
+    position: absolute;
+    /* transform: translate(88%,50%); */
+    left: 38%;
+    top: 38%;
+ }
+ .mirror img{
+    position: absolute;
+    /* transform: translate(88%,50%); */
+   left: 39%;
+    top: 86%;
+ }
+ .mirror p{
+    text-align: center;
+    position: relative;
+    top: 90px;
+ }
+ .btnEmptyCart{
+    background: #12b46a;
+    padding: 10px 12px;
+    border: 0px;
+    color: #fff;
+    font-size: 16px;
+    width: 123px;
+    border-radius: 0px;
+        position: relative;
+    left: 44%;
+    margin: 30px 0px;
+    top:90px;
+ }
+ .btnEmptyCart a{
+    color: #fff;
+ }
+ .empty-cart{
+    margin-bottom: 100px;
+ }
+ .bg{
+        background: #fff;
+    margin-bottom: 30px;
+ }
+
+</style>
+<div class="container bg" id="full">
+        <div class="empty-cart">      
+          <div class="empty">
+           <img src="resources/images/basket.png" />
+          </div> 
+          <div class="mirror">
+             <img src="resources/images/mirror.png" />
+             <p style="font-size:23px;"><b>Empty Cart</b></p>
+             <p style="font-size:20px;">Looks like you haven't made</p>
+             <p style="font-size:20px;">your choice yet...</p>
+             <div class="btnEmptyCart">
+                <a ui-sref="store">Back to Menu</a>
+              </div> 
+              <p style="font-size:20px;">Check what we've got  for you and</p>
+              <p style="font-size:20px;">get it swished!</p>
+          </div>
+        </div>  
+      </div>

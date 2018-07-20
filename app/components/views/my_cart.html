@@ -1,0 +1,251 @@
+  <style>
+  .btn {
+display: inline-block;
+padding: 6px 12px !important;
+margin-bottom: 0;
+font-size: 14px !important;
+font-weight: 400;
+line-height: 1.42857143;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+-ms-touch-action: manipulation;
+touch-action: manipulation;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+background-image: none;
+border: 1px solid transparent !important;
+border-radius: 4px !important;
+}
+  .btn-no{
+  margin: 0px 26px;
+    left: 44% !important;
+    position: relative !important;
+}
+.btn-yes{
+  margin: 0px 0px !important;
+  background: #12b46a;
+  color: white;
+}
+.modalClass {
+  max-width: 350px;
+  margin: 40% auto;
+}
+.button.button-energized {
+    border-color: transparent;
+    background-color: #ff771c;
+    color: #fff;
+} 
+.my-cart .product{
+  height: 165px;
+  width: 222px;
+      box-shadow: 4px 5px 15px #f2f2f2;
+    border: 1px solid #f2f2f2;
+}
+.my-cart .product img{
+      position: absolute;
+    /* left: 25%; */
+  /* top: 16%; */
+  height: 169px;
+  width: 220px;
+}
+.my-cart .product-img{
+      padding: 20px 0px;
+}
+.my-cart .rupy{
+  color: #f28433;
+      font-size: 20px;
+    /* margin-top: 6px; */
+    position: relative;
+    top: 2px;
+}
+.my-cart .ship{
+  color: #000;
+  font-size: 16px;
+}
+.my-cart .bg{
+      background: #fff;
+          margin-bottom: 40px;
+}
+.my-cart .price-details{
+      padding-bottom: 10px;
+    padding-top: 30px;
+}
+.my-cart .price-details h5{
+  color: #f28433;
+  font-size: 17px;
+}
+.my-cart .product-name{
+  float: left;
+  color: #000;
+  font-size: 17px;
+  font-weight: bold;
+}
+.my-cart .product-price{
+   float: right;
+  color: #000;
+  font-size: 17px; 
+  font-weight: bold;  
+
+}
+.my-cart .rate{
+  box-shadow: 4px 5px 15px #f2f2f2;
+    border: 1px solid #f2f2f2;
+        padding-bottom: 45px;
+}
+.my-cart .rate p{
+  padding: 10px 30px;
+}
+.my-cart  p{
+  clear: both;
+}
+.my-cart .view{
+      float: right;
+    color: #f28433;
+    clear: both;
+    padding-right: 20px;
+    padding-top: 5px;
+}
+.my-cart .btn{
+    background: #12b46a;
+    padding: 10px 30px;
+    border: 0px;
+    color: #fff;
+    font-size: 17px;
+    margin: 24px 0px;
+    width: 123px;
+    border-radius: 0px;
+ }
+.my-cart .btn a{
+    color: #fff;
+ }
+.my-cart .counter {
+    float:left;
+    margin: 0 0 0 10px;
+}
+.my-cart .counter .btn1 {
+    font-size:12px;
+    padding: 15px 20px;
+}
+.my-cart .counter .count{
+      padding: 15px 30px;
+          background: #f9f9f9;
+}
+.my-cart .counter a{
+  background: #f2f1ef;
+}
+.my-cart .jcounter{
+      margin: 42px -7px;
+}
+.my-cart .counter:last-child{
+  display: none;
+}
+.my-cart .delete img{
+  margin-top: 0px;
+  margin-left: 20px;
+}
+@media(max-width: 992px){
+  .my-cart .jcounter {
+      margin: 23px 0px;
+  }
+  /*.product-desc{
+      margin-left: 100px;
+  }   */
+  .my-cart .product {
+    height: 165px;
+    width: 159px;
+    box-shadow: 4px 5px 15px #f2f2f2;
+    border: 1px solid #f2f2f2;
+}
+.my-cart .product img {
+    position: absolute;
+    /* left: 25%; */
+  /* top: 16%; */
+  height: 169px;
+  width: 220px;
+}
+}
+@media(max-width: 767px){
+  .my-cart .product {
+      height: 165px;
+      width: 159px;
+      box-shadow: 4px 5px 15px #f2f2f2;
+      border: 1px solid #f2f2f2;
+      margin: auto;
+  }
+.my-cart .product img {
+  position: absolute;
+  /* left: 25%; */
+  /* top: 16%; */
+    height: 163px;
+    width: 158px;
+  }
+}
+
+  </style>
+  <div class="container-fluid" style="background: #fff;" ng-init="ctrl.init()">
+   
+
+    <div>
+     
+      <div class="container my-cart" style="margin-top: 3%;" id="full">
+        <div class="product-img" ng-repeat="p in ctrl.cart.products">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="product">
+                <img src="{{p.imgurl}}">
+              </div>  
+            </div>
+            <div class="col-md-9">
+              <div class="product-desc">
+                <p style="font-size: 17px;"><b>{{p.name}}</b></p>
+                <p><span class="rupy">{{p.discountedPrice | currencySymbol:ctrl.cart.symbol}}&nbsp;&nbsp;<b style="text-decoration: line-through;font-size: 20px;">{{p.price | currencySymbol:ctrl.cart.symbol}}</b></span> | <span class="ship">Free Shipping(estimated {{p.shippingTime}})</span></p>
+              </div>
+              <div class="jcounter">
+                    <!--<input type="text" ng-model="p.qty" class="counter" style="text-align:center;border-bottom:0px;">-->
+                    <div class="counter btn-group"><input type="number" value="3" data-maxvalue="8" class="counter" style="display: none;"><a href="" class="btn1" ng-click="ctrl.decreaseQuantity(p.qty,p.productId)">-</a><span class="btn1 count">{{p.qty}}</span><a href="" class="btn1" ng-click="ctrl.increaseQuantity(p.qty,p.productId)">+</a></div>
+                    <div class="counter btn-group"><input type="number" value="4" data-maxvalue="5" class="counter" style="display: none;"><a href="" class="btn1">-</a><span class="btn1 count">4</span><a href="" class="btn1">+</a></div>
+                </div>
+                <span class="delete" ng-click="ctrl.getItemToBeDeleted(p)" data-toggle="modal" data-target="#myModal"><a><img src="resources/images/delete_icon.png"></a></span>
+            </div>
+          </div>
+          <hr ng-show="!$last" style="margin-top: 40px;margin-bottom:0px;">
+        </div>
+
+      <div class="price-details">
+        <h5>Price details</h5>
+        <div class="rate">
+          <p><span class="product-name">Bag Total</span><span class="product-price">{{ctrl.getCartItemTotal() || 0 | currencySymbol:ctrl.cart.symbol}}</span></p>
+          <p><span class="product-name">Bag Discount</span><span class="product-price">-{{ctrl.getDiscountTotal() || 0 |currencySymbol:ctrl.cart.symbol}}</span></p>
+          <p><span class="product-name">Total</span><span class="product-price">{{ctrl.getOrderTotal() || 0 | currencySymbol:ctrl.cart.symbol}}</span></p>
+          <!--<span class="view">View Details</span>-->
+        </div>
+      </div> 
+       <div class="row">
+          <div class="col-md-12">
+              <button ng-click="ctrl.goToCheckoutPage()" class="btn">Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="backdrop"></div>
+
+  <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+    
+        <!-- Modal content-->
+        <div class="modal-content modalClass">
+          <div class="modal-body">
+            <h3 style="margin-left: 26%;">Are you sure?</h3>
+            <button type="button" class="btn btn-no btn-default" data-dismiss="modal">No</button>
+            <button class="btn btn-yes" ng-click="ctrl.removeFromCart()">Yes</button>
+          </div>
+          
+        </div>
+    
+      </div>
+    </div>

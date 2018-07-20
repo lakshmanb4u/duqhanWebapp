@@ -1,0 +1,56 @@
+<style>
+/*#header-main{
+    display: none;
+}
+#footer-main{
+    display: none;
+}
+.login-pop{
+        z-index: 9999;
+}*/
+</style>
+<div class="container">
+    <div class="login-pop">
+        <div class="pop-img">
+          <img src="resources/images/login-pop-1.jpg" alt="pop-imag" />
+        </div>
+        <div class="pop-info">
+            <div class="logo-img">
+                <img src="resources/images/login-pop-2.jpg" alt="pop-imag" />
+            </div> 
+            <p style="text-align: center;font-size: 24px;color: #f28433;font-weight: bold;">Duqhan</p>
+            <p style="text-align: center;font-size: 18px;color: #000;">Sign in to Browse the <br/> Products !</p>
+            <div class="fb" style="text-align: center;">
+                <a fb-login  style="font-size: 18px;background: #2450af;color: #fff;padding: 13px 8px 13px 0px;" ng-click="ctrl.facebookLogin()" ><img src="resources/images/fb.png" alt="fb"> Sign in with Facebook </a>
+            </div>
+            <!-- <button fb-login type="button" ng-click="ctrl.facebookLogin()">Login with Facebook</button> -->
+            
+            <p style="text-align: center;">Or</p>
+            <div class="login-pop-email" style="text-align: center;">
+                <a ui-sref="store.guest-login" style="font-size: 18px;background: #f28433;color: #fff;padding: 13px 62px 13px 37px;"> Sign with Email </a>
+            </div>
+            <p style="text-align: center;font-size: 16px;color: #000;">We also accept payments from</p>
+            <div class="payment">
+                <div class="paytm">
+                    <img src="resources/images/paytm.png" alt="paytm" />
+                </div>
+                <div class="paypal">
+                    <img src="resources/images/paypal.png" alt="paypal" />
+                </div>
+            </div>
+        </div>
+    </div>    
+  </div>
+<script>
+  function myFacebookLogin() {
+    FB.login(function(response){
+        console.log('FaceBook User', response);
+    }, {scope: 'email,  public_profile'});
+
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' , response);
+    });
+
+}
+</script>
+    

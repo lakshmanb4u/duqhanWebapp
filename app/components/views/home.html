@@ -1,0 +1,6 @@
+
+<div id="header-main" ng-include="'components/views/header.html'" class="main-comp"></div>
+<div id="main" class="main-view" ui-view>
+	<div ng-include="'components/views/latest.html'" ng-controller="ProductsCtrl as ctrl"></div>
+</div>
+<div  id="footer-main" ng-include="'components/views/footer.html'" class="footer-comp"></div>

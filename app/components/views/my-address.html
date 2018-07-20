@@ -1,0 +1,52 @@
+<style>
+    .defaultAddressBg {
+        font-size: 14px;
+        background-color: #e7e7e7;
+        margin-left: 18px;
+        border-radius: 40%;
+        padding: 6px 10px;
+    }
+</style>
+<div class="container my-address" id="full">
+    <h5><a ui-sref="store.addnewaddress" style="text-decoration: none;">+Add New Address</a></h5>
+    <div class="row">
+        <div class="col-md-6" ng-repeat="address in ctrl.addresses" >
+            <div class="contact">
+              <!-- <p>Where you can find us?</p> -->
+                <div class="address">
+                  <input type="radio" name="radio" ng-model ="address.status" value="1" ng-click="ctrl.changeDefaultAddressOnClick(address)">
+                   <p><span ng-show="!address.isResidential">Office</span><span ng-show="address.isResidential">Home</span><span class="defaultAddressBg" ng-show="address.status == 1">Default</span><a style="cursor: pointer;" ng-click="ctrl.goToEditAddressPage(address)">Edit</a></p>
+                    <address>
+                        <b>{{address.contactName}}</b><br/>
+                        {{address.streetOne}} {{address.streetTwo}}<br/>
+                        {{address.city}} - {{address.zipCode}} <br/>
+                        {{address.phone}}<br/>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-md-6">
+            <div class="contact">
+                <!--  <p>Where you can find us?</p> -->
+                <!--<div class="address">
+                    <input type="radio" name="radio">
+                    <p><span>Home</span><a href="">Edit</a></p>
+                    <address>
+                        <b>Shekhar Hans</b><br/>
+                        F7 42WORKS Industrial Area Phase 8<br/>
+                        Mohali - 160055<br/>
+                        +919992006969<br/>
+                    </address>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn" style="position: inherit;">
+                <a ng-click="ctrl.setDefaultAddress()">Continue</a>
+            </div>
+        </div>
+    </div>
+</div>
+

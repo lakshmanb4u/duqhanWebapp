@@ -1,137 +1,252 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="duqhan" class="no-js"><!--<![endif]-->
+	<head>
 
-<head>
-  <!--<base href="/">-->
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <!-- ionic meta tags -->
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-  <!-- custom meta tags -->
-  <meta name="format-detection" content="telephone=no">
-  <!-- no auto telephone linking -->
+		<!-- <meta charset="utf-8">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<meta name="format-detection" content="telephone=no">
+	
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<title>Duqhan</title>
+	
+		
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- can be saved to home screen on ios -->
-  <title>Duqhan</title>
+		<script src="resources/js/jquery-3.2.1.min.js"></script> 
+		<link rel="stylesheet" href="resources/css/app.css">
+		<link rel="stylesheet" href="resources/bootstrap/css/slider.css">
+		<link rel="stylesheet" href="resources/bootstrap/css/style.css">
+		<link rel="stylesheet" href="resources/bower/angularjs-datepicker/src/css/angular-datepicker.css">
+		
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet">
+		<link href="resources/bower/angular-jk-rating-stars/dist/jk-rating-stars.css" rel="stylesheet" type="text/css" />
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" rel="stylesheet" type="text/css"/>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/> -->
 
-  <!-- build:css styles/vendor.css -->
-  <!-- bower:css -->
-  <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
-  <!-- endbower -->
-  <!-- endbuild -->
 
-  <!-- build:css main/styles/app.css -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="auth/styles/auth.css">
-  <link rel="stylesheet" href="main/styles/main.css">
-  <link rel="stylesheet" href="store/styles/store.css">
-  <!-- endinject -->
-  <!-- endbuild -->
-</head>
 
-<body ng-app="Duqhan">
-  <div id="fb-root">
-    <script src="http://connect.facebook.net/en_US/sdk.js" type="text/javascript"></script>
-  </div>
+ 	  <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Duqhan</title>
+      <link href="resources/bootstrap/css/all.css" rel="stylesheet">
+      <!-- <link rel="stylesheet" type="text/css" href="resources/js/angular-auto-complete.css" /> -->
+      <!-- <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+      <!-- <link href="resources/bootstrap/css/normlize.css" rel="stylesheet"> -->
+      <!-- <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet"> -->
+      <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" rel="stylesheet" type="text/css"/> -->
+		<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" rel="stylesheet" type="text/css"/> -->
+      <!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700" rel="stylesheet"> -->
+     <!--  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,600i" rel="stylesheet"> -->
+       <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  -->
+      <!-- <link rel="stylesheet" href="resources/bootstrap/css/animate.css"> -->
+      <!-- <link href="resources/bower/angular-jk-rating-stars/dist/jk-rating-stars.css" rel="stylesheet" type="text/css" /> -->
+      <!--  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+      <!-- <link rel="stylesheet" href="resources/bootstrap/css/owl.carousel.css">
+      <link rel="stylesheet" href="resources/bootstrap/css/owl.theme.css"> -->
+     <!--  <link href="resources/bootstrap/css/slick.css" rel="stylesheet"/> -->
+       <!-- <link href="../resources/bootstrap/css/style.css" rel="stylesheet"> --> 
+      <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/> -->
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+        <!-- <script src="resources/bootstrap/js/bootstrap.js"></script> -->   
+      	<!-- <script src="resources/bootstrap/js/slick.min.js"></script> -->
+      	<!--  <script src="resources/bootstrap/js/owl.carousel.js"></script> -->
+      	<script src="resources/bootstrap/js/all.js"></script>
+		<script>
+		(function () {
+			var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', intercomSettings); } else {
+			var d = document; var i = function () { i.c(arguments) }; i.q = []; i.c = function (args) { i.q.push(args) }; w.Intercom = i; function l() {
+				var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true;
+				s.src = 'https://widget.intercom.io/widget/{app_id}';
+				var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+			} if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); }
+			}
+		})()
+		</script>
+		<!-- <script type="text/javascript" src="https://sandbox-assets.secure.checkout.visa.com/
+checkout-widget/resources/js/integration/v1/sdk.js">
+</script> -->
+		<style>
+			.loadingDiv {
+				position: fixed;
+				z-index: 1500;
+				height: 2em;
+				width: 2em;
+				overflow: show;
+				margin: auto;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				display:none;
+			}
+		</style>
+		<base href="/">
+		<!-- Facebook Pixel Code -->
+	 <script>
+	 !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+          n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1612756512132293');
+    fbq('track', 'PageView');
+	</script>
+	<noscript><img height="1" width="1" style="display:none"
+	  src="https://www.facebook.com/tr?id=1612756512132293&ev=PageView&noscript=1"
+	/></noscript>  
+	<!-- End Facebook Pixel Code -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120863654-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 
-  <!-- the nav bar will be updated as we navigate between views -->
-  <!-- <ion-nav-bar> can be removed when using sidemenu (contained in menu.html) -->
-  <ion-nav-bar class="bar-energized">
-    <!-- <ion-nav-back-button></ion-nav-back-button> -->
-    <ion-nav-buttons side="right">
-      <button class="button button-small button-icon button-clear ion-ios-home-outline larger-icon" ui-sref="landing"></button>
-      <button class="button button-small button-icon button-clear ion-log-in larger-icon" ui-sref="login"></button>
-    </ion-nav-buttons>
-  </ion-nav-bar>
-  <!-- the current view will be rendered in the <ion-nav-view> directive -->
-  <ion-nav-view></ion-nav-view>
+	  gtag('config', 'UA-120863654-1');
+	</script>
 
-  <!-- will be a 404 during development -->
-  <!--<script src="cordova.js"></script>-->
+	</head>
+	<body id="body" style="overflow-x: hidden !important;">
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+		<div id="loaderImg" class="loadingDiv">
+				<img src="resources/images/spinner.gif">
+			</div>
+		<div ui-view></div>
 
-  <!-- build:js scripts/vendor.js -->
-  <!-- bower:js -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="bower_components/ionic/release/js/ionic.js"></script>
-  <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
-  <script src="bower_components/facebook-connect-plugin/index.js"></script>
-  <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
-  <script src="bower_components/angular-messages/angular-messages.js"></script>
-  <script src="bower_components/ngstorage/ngStorage.js"></script>
-  <script src="bower_components/moment/moment.js"></script>
-  <script src="bower_components/angular-moment/angular-moment.js"></script>
-  <script src="bower_components/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
-  <script src="bower_components/ionic-close-popup/ionic-close-popup.js"></script>
-  <!-- endbower -->
-  <script src="bower_components/ionic-ion-imageCacheFactory/ionic.ion.imagecachefactory.js"></script>
-  <script src="bower_components/ionic-cloud/ionic.cloud.min.js"></script>
-  <!-- endbuild -->
+		<!-- In production use:
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+		-->
+		<!-- <script src="resources/boot/bootstrap/js/jquery.min.js"></script> -->
+		<!-- <script src="resources/bower/angular/angular.js"></script> -->
+		<!-- <script src="resources/bower/angular-animate/angular-animate.js"></script> -->
+		<!-- <script src="resources/bower/angular-sanitize/angular-sanitize.js"></script> -->
+		<!-- <script src="resources/bower/angular-ui-router/release/angular-ui-router.js"></script> -->
+		<!-- <script src="resources/js/facebook-connect-plugin.js"></script> -->
+		<!-- <script src="resources/bower/ngCordova/dist/ng-cordova.js"></script> --> 
+		<!-- <script src="resources/bower/ngstorage/ngStorage.js"></script> -->
+		<!-- <script src="resources/bower/swiper/dist/js/swiper.js"></script> -->
+		<!-- <script src="resources/bower/angular-swiper/dist/angular-swiper.js"></script> -->
+		<!-- <script src="resources/bower/SHA-1/sha1.js"></script> -->
+		<!-- <script src="resources/bower/angulartics/src/angulartics.js"></script> -->
+		<!-- <script src="resources/bower/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script> -->
+		<!-- <script src="resources/bower/angulartics-facebook-pixel/dist/angulartics-facebook-pixel.min.js"></script> -->
+		<!-- <script src="resources/bower/angular-bootstrap/ui-bootstrap-tpls.js"></script> -->
+		
+		<!-- <script src="resources/bower/angularjs-datepicker/src/js/angular-datepicker.js"></script> -->
+		<!-- <script src="resources/bower/angularjs-social-login/angularjs-social-login.js"></script> -->
+		<!-- <script src="resources/bower/angular-jk-rating-stars/dist/jk-rating-stars.js"></script> -->
+		  <script src="resources/bower/angular-messages/angular-messages.js"></script> 
+		<script src="resources/bower/moment/moment.js"></script> 
+		<script src="resources/bower/angular-moment/angular-moment.js"></script> 
+		 <script type="text/javascript" src="resources/js/angular-sanitize.js"></script>
+    <script type="text/javascript" src="resources/js/lodash.js"></script>
 
-  <!-- build:js scripts/app.js -->
-  <!-- inject:js -->
-  <script src="store/store.js"></script>
-  <script src="store/services/store-serv.js"></script>
-  <script src="store/services/product-serv.js"></script>
-  <script src="store/services/image-upload-serv.js"></script>
-  <script src="store/services/common-serv.js"></script>
-  <script src="store/filters/order-status-fil.js"></script>
-  <script src="store/filters/date-fil.js"></script>
-  <script src="store/filters/cloudinary-transformation-fil.js"></script>
-  <script src="store/controllers/store-menu-ctrl.js"></script>
-  <script src="store/controllers/store-debug-ctrl.js"></script>
-  <script src="store/controllers/size-chart-ctrl.js"></script>
-  <script src="store/controllers/shipping-ctrl.js"></script>
-  <script src="store/controllers/search-ctrl.js"></script>
-  <script src="store/controllers/return-policy-ctrl.js"></script>
-  <script src="store/controllers/profile-ctrl.js"></script>
-  <script src="store/controllers/products-ctrl.js"></script>
-  <script src="store/controllers/products-by-category-ctrl.js"></script>
-  <script src="store/controllers/product-ctrl.js"></script>
-  <script src="store/controllers/order-history-ctrl.js"></script>
-  <script src="store/controllers/misc/terms-conditions-ctrl.js"></script>
-  <script src="store/controllers/misc/privacy-policy-ctrl.js"></script>
-  <script src="store/controllers/misc/about-ctrl.js"></script>
-  <script src="store/controllers/customer-support-ctrl.js"></script>
-  <script src="store/controllers/contactus-ctrl.js"></script>
-  <script src="store/controllers/checkout-ctrl.js"></script>
-  <script src="store/controllers/cart-ctrl.js"></script>
-  <script src="store/controllers/after-payment-ctrl.js"></script>
-  <script src="store/controllers/address-ctrl.js"></script>
-  <script src="store/constants/store-config-const.js"></script>
-  <script src="main/main.js"></script>
-  <script src="main/services/httpInterceptor-serv.js"></script>
-  <script src="main/services/firebase-serv.js"></script>
-  <script src="main/services/busyLoader-serv.js"></script>
-  <script src="main/constants/config-const.js"></script>
-  <script src="auth/auth.js"></script>
-  <script src="auth/services/auth-api-serv.js"></script>
-  <script src="auth/controllers/user-ctrl.js"></script>
-  <script src="auth/controllers/signup-ctrl.js"></script>
-  <script src="auth/controllers/login-ctrl.js"></script>
-  <script src="auth/controllers/forgot-password-ctrl.js"></script>
-  <script src="auth/constants/auth-config-const.js"></script>
-  <script src="app.js"></script>
-  <!-- endinject -->
-  <!-- endbuild -->
+    <script type="text/javascript" src="resources/js/angular-auto-complete.js"></script> 
+		 <!-- <script src="resources/bower/ionic/release/js/ionic.js"></script> 
+	 <script src="resources/bower/ionic/release/js/ionic-angular.js"></script> 
+		<script src="resources/bower/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+		<script src="resources/bower/ionic-close-popup/ionic-close-popup.js"></script>
+		<script src="resources/bower/ionic-ion-imageCacheFactory/ionic.ion.imagecachefactory.js"></script>
+		<script src="resources/js/ionic.cloud.min.js"></script> -->
 
-  <!--<script type="text/javascript">
-        angular.element(document).ready(function () {
-        if (window.cordova) {
-          console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
-          document.addEventListener('deviceready', function () {
-            console.log("Deviceready event has fired, bootstrapping AngularJS.");
-            angular.bootstrap(document.body, ['Duqhan']);
-          }, false);
-        } else {
-          console.log("Running in browser, bootstrapping AngularJS now.");
-          angular.bootstrap(document.body, ['Duqhan']);
-        }
-      });
-    </script>-->
-</body>
+		  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" type="text/javascript"></script> 
 
+		<script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>  -->
+
+		<script src="components/controllers/store/store.js"></script>
+		<script src="components/controllers/store/services/store-serv.js"></script>
+		<script src="components/controllers/store/services/product-serv.js"></script>
+		<script src="components/controllers/store/services/image-upload-serv.js"></script>
+		<script src="components/controllers/store/services/common-serv.js"></script>
+		<script src="components/controllers/store/filters/order-status-fil.js"></script>
+		<script src="components/controllers/store/filters/date-fil.js"></script>
+		<script src="components/controllers/store/filters/cloudinary-transformation-fil.js"></script>
+		<script src="components/controllers/store/directives/horizontal-tab-dir.js"></script>
+		<script src="components/controllers/store/controllers/store-menu-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/store-debug-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/size-chart-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/shipping-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/search-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/return-policy-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/profile-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/products-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/products-by-category-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/product-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/order-history-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/misc/terms-conditions-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/misc/privacy-policy-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/misc/about-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/free-products-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/free-product-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/customer-support-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/contactus-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/checkout-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/cart-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/after-payment-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/address-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/add-address-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/edit-address-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/order-details-ctrl.js"></script>
+		<script src="components/controllers/store/controllers/return-order-ctrl.js"></script>
+	  	<script src="components/controllers/store/controllers/ask-question.js"></script>
+	  	<script src="components/controllers/store/controllers/guest-user-ctrl.js"></script>
+	  	<script src="components/controllers/store/controllers/guest-signup-ctrl.js"></script>
+		<script src="components/controllers/main/main.js"></script>
+		<script src="components/services/httpInterceptor-serv.js"></script>
+		<script src="components/services/firebase-serv.js"></script>
+		<script src="components/services/busyLoader-serv.js"></script>
+		<script src="components/constants/config-const.js"></script>		
+		<script src="components/controllers/auth/auth.js"></script>
+		<script src="components/controllers/auth/services/auth-api-serv.js"></script>
+		<script src="components/controllers/auth/controllers/user-ctrl.js"></script>
+		<script src="components/controllers/auth/controllers/signup-ctrl.js"></script>
+		<script src="components/controllers/auth/controllers/login-ctrl.js"></script>
+		<script src="components/controllers/auth/controllers/forgot-password-ctrl.js"></script>
+		<script src="components/controllers/auth/controllers/contactus-public-ctrl.js"></script>
+		<!-- <script src="components/controllers/app.routing.js"></script> -->
+		<!-- <script src="components/controllers/StoreController.js"></script>
+		<script src="components/controllers/AboutController.js"></script>
+		<script src="components/controllers/HomeController.js"></script>-->
+		<script src="app.js"></script>
+		<script>
+			window.fbAsyncInit = function() {
+				FB.init({
+				appId            : '698576100317336',
+				autoLogAppEvents : true,
+				xfbml            : true,
+				version          : 'v2.8'
+				});
+			};
+
+			(function(d, s, id){
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {return;}
+				js = d.createElement(s); js.id = id;
+				js.src = "https://connect.facebook.net/en_US/sdk.js";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+    		</script>
+		
+	</body>
 </html>

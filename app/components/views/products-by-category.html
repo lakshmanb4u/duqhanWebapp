@@ -1,0 +1,187 @@
+<style>
+   #footer-main{
+      display: none;
+   }
+   .fix-breadcrum {
+    position: fixed;
+    z-index: 1;
+    left: 8%;
+    padding-top: 7px;
+    background: white;
+   }
+   .ht-230{
+      height: 130px !important;
+   }
+      ul.breadcrumb {
+     padding: 5px 0px 0px 0px;
+     list-style: none;
+      background-color: transparent;
+      margin-bottom:8px !important;
+  }
+  ul.breadcrumb li {
+     display: inline;
+     font-size: 18px;
+  }
+  ul.breadcrumb li+li:before {
+     padding: 8px;
+     color: black;
+     content: "\003e";
+  }
+  ul.breadcrumb li a {
+     color: #ff771c;
+     text-decoration: none;
+  }
+  ul.breadcrumb li a:hover {
+     color: #ff771c;
+     text-decoration: underline;
+  }
+  .btn .caret{
+   color: #ff771c !important;
+  }
+  .filter-dropdown .show{
+     display: inline-block !important;
+     /*height: 271px;*/
+   
+  }
+</style>
+
+<div class="row" >
+     <div class="container fix-breadcrum" id="bread-main" style="width: 92%;">
+      <ul class="breadcrumb">
+          <li ng-repeat="breadcrum in ctrl.breadcrums" ng-click="ctrl.goToCataegory(breadcrum.id)" ><a style="cursor: pointer;" >{{breadcrum.name}}</a></li>     
+       </ul>
+    </div>
+         <div class="latest-section container">
+            <div class="row"  style="margin-top: 40px !important;">
+         <div class="col-md-2">
+            <div class="filter-page">
+            <div class="filter-div">
+              <p class="filter-p1">Filter by</p> 
+              <p class="filter-new-p"><span class="filter-input"><input type="checkbox" name="c" id="latestRadio" value="latest" ng-click="ctrl.gotToCat('latest')" /></span><span class="filter-name">Latest</span></p>
+              <p class="filter-new-p"><span class="filter-input"><input type="checkbox" name="c" id="popularRadio" value="popular" ng-click="ctrl.gotToCat('popular')"  /></span><span class="filter-name">Popular</span></p>
+              <p class="filter-new-p"><span class="filter-input"><input type="checkbox" name="c" id="recentRadio" value="recent" ng-click="ctrl.gotToCat('recent')" /></span><span class="filter-name">Recently Viewed</span></p>
+            </div>
+           
+            <div class="filter-div-second">  
+               <p class="filter-p1" style="padding-top: 10px;">Price</p>
+                <p class="filter-new-p">
+                <span class="filter-input1">
+                  <input type="checkbox" name="priceRange" id="below_500" ng-click="ctrl.belowFiveHundred()"/>
+               </span><span class="filter-name">Under {{ctrl.filterHundred | currencySymbol:ctrl.symbol}}</span>
+                </p>
+                <div ng-show="ctrl.showPriceFilter">
+                  <p class="filter-new-p">
+                      <span class="filter-input1">
+                        <input type="checkbox" name="priceRange" id="below_1000" ng-click="ctrl.belowThousand()"/>
+                     </span>
+                     <span class="filter-name">{{ctrl.filterHundred | currencySymbol:ctrl.symbol}} - {{ctrl.filterThousand | currencySymbol:ctrl.symbol}}</span>
+                  </p>
+                  <p class="filter-new-p">
+                      <span class="filter-input1">
+                        <input type="checkbox" name="priceRange" id="above_1000" ng-click="ctrl.aboveThousand()"/>
+                     </span>
+                     <span class="filter-name">Over {{ctrl.filterThousand | currencySymbol:ctrl.symbol}}</span>
+                  </p>
+                  <p style="padding-top: 5px;cursor: pointer;" class="filter-p1" ng-click="ctrl.clearPrice()">Clear
+                  </p>
+                  </div>
+                </div>  
+               <div class="filter-sort">
+                  <!--  <div class="filter-dropdown dropdown-head">
+                     <button onclick="filterprice()" class="filter-dropbtn">Price<p id="priceArrow" style="color: #000;float: right;font-size: 22px;">&#8250;</p></button>
+                     <div id="pricefilterDropdown" class="filter-dropdown-content">
+                        <div id="filterslidecontainer">
+                        <p><span class="filter-name">Under Rs.500</span>
+                            <span class="filter-input1">
+                              <input type="radio" name="priceRange" id="below_500" ng-click="ctrl.belowFiveHundred()"/>
+                           </span>
+                        </p>
+                        <div ng-show="ctrl.showPriceFilter">
+                        <p><span class="filter-name">Rs.500 - Rs.1000</span>
+                            <span class="filter-input1">
+                              <input type="radio" name="priceRange" ng-click="ctrl.belowThousand()"/>
+                           </span>
+                        </p>
+                        <p><span class="filter-name">Over Rs.1000</span>
+                            <span class="filter-input1">
+                              <input type="radio" name="priceRange" ng-click="ctrl.aboveThousand()"/>
+                           </span>
+                        </p>
+                        </div>
+                        <p><span class="filter-name">
+                           <a ng-click="ctrl.clearPrice()">Clear</a>
+                           </span>
+                        </p>
+                        </div>
+                     </div>
+                  </div>  -->
+                  <div class="filter-dropdown dropdown-head" ng-show="ctrl.categories != null && ctrl.categories.length > 0" >
+                     <button onclick="filterctaegory()" id="filter-arrow" class="filter-p1 Myclass">Category<p id="categoryArrow" style="color: #000;float: right;font-size: 22px;">&#8250;</p></button>
+                     <div id="categoryfilterDropdown" class="filter-dropdown-content">
+                        <div id="filterslidecontainer" class="catScroll">
+                           <p class="filter-new-p" ng-repeat="category in ctrl.categories" >
+                              <span class="filter-input">
+                                 <input type="checkbox" name="category" ng-model="category.isChecked" ng-change="ctrl.check(category)" />
+                              </span>
+                              <span class="filter-name">{{category.displayText}}</span>
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div> 
+            </div>
+         </div>
+         <div class="col-md-10 prod" style="margin-top: 5px;">
+         <h4 ng-show="ctrl.isNoProducts" style="margin-left: 39%;margin-top:10%;">{{ctrl.showNoProducts}}</h4>
+            <!-- <div class="col-md-4" ng-class-odd="'prod-div1'" ng-class-even="'prod-div2'" ng-repeat="product in ctrl.products">
+               <div class="section1">
+                  <div class="image-content"  style="width: 289px;text-align: center;">
+                     <img src="{{product.imgurl || 'resources/images/default.jpg'}}" style="width: 200px;margin: 10px auto;height: 200px">
+                  </div>
+                  <p class="letest-p">{{product.name}}</p>
+                  <p class="letest-p">Free shiping | 3-4 weeks delivery</p>
+                  <div>
+                  <p class="prod-price letest-p">{{product.discountedPrice | currencySymbol:product.symbol}}</p>
+                  <a ng-mousedown="ctrl.goToProductDetailsPage($event,product.productId)" class=" ship-btn">view details</a>
+                  </div>
+               </div>
+            </div> -->
+            <div class="product-cart" ng-repeat="product in ctrl.products">
+              <a ng-mousedown="ctrl.goToProductDetailsPage($event,product.productId)">
+                  <div class="product-img-div">
+                     <img src="{{product.imgurl || 'resources/images/default.jpg'}}" class="product-cart-img" style="cursor:pointer">
+                  </div>
+              </a>    
+                  <p class="letest-p">{{product.name}}</p>
+                   <p class="letest-p-second">Free shiping | 3-4 weeks delivery</p>
+                  <p><span class="rupy">{{product.discountedPrice | currencySymbol:product.symbol}}&nbsp;&nbsp;</span><span class="line-rupy">{{product.price | currencySymbol:product.symbol}}</span></p>
+              
+            </div>
+           </div>
+         </div>   
+      </div>
+      </div>
+      <div infinite-scroll="ctrl.loadMore()" infinite-scroll-distance="1" immediate-check="false" infinite-scroll-disabled='ctrl.busyLoadingData'></div>
+<script type="text/javascript">
+  /*function filterprice() {
+     document.getElementById("pricefilterDropdown").classList.toggle("show");
+     if($("#priceArrow").attr("style") == "color: rgb(0, 0, 0); float: right; font-size: 22px; transform: rotate(90deg);") {
+      $("#priceArrow").css("transform","rotate(0deg)");
+     } else {
+      $("#priceArrow").css("transform","rotate(90deg)");
+     }
+  }*/
+  function filterctaegory() {
+     document.getElementById("categoryfilterDropdown").classList.toggle("show");
+     document.getElementById("filter-arrow").className = "Myclass";
+     if($("#categoryArrow").attr("style") == "color: rgb(0, 0, 0); float: right; font-size: 22px; transform: rotate(90deg);") {
+      $("#categoryArrow").css("transform","rotate(0deg)");
+     } else {
+      $("#categoryArrow").css("transform","rotate(90deg)");
+     }
+   }
+   filterctaegory();
+   /*filterprice();*/
+</script>
+      
+      

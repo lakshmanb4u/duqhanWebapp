@@ -1,79 +1,33 @@
-// Karma configuration
-// Generated on Wed Jul 01 2015 13:51:22 GMT+0200 (CEST)
-
-'use strict';
-
-module.exports = function (config) {
-  // retrieve main files from bower
-  var wiredep = require('wiredep');
-  var bowerFiles = wiredep({devDependencies: true}).js;
-
+module.exports = function(config){
   config.set({
 
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath : './',
 
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'angular-filesort'],
+    files : [
+      'app/resources/bower/angular/angular.js',
+      'app/resources/bower/angular-mocks/angular-mocks.js',
+      'app/resources/bower/angular-route/angular-route.js',
+      'app/app.js',
+      'app/components/controllers/*.js',
+      'tests/*_test.js'
+    ],
 
-    // sort app/**/*.js files
-    angularFilesort: {
-      whitelist: [
-        'app/!(bower_components)/**/*.js'
-      ]
-    },
+    autoWatch : true,
+    frameworks: ['jasmine'],
+    browsers : ['PhantomJS'],
 
-    // list of files / patterns to load in the browser
-    files: bowerFiles.concat([
-      // other
-      'app/!(bower_components)/**/*.js',
-      // test
-      'test/karma/**/*.js',
-      // templates
-      'app/**/templates/*.html'
-    ]),
+    plugins : [
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-junit-reporter',
+      'karma-phantomjs-launcher'
+    ],
 
-    // list of files to exclude
-    exclude: [],
+    junitReporter : {
+      outputFile: 'tests/junit-reporter-log.xml',
+      suite: 'unit'
+    }
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      'app/**/templates/*.html': ['ng-html2js']
-    },
-
-    // use template cache to avoid unexpected $http requests from ui-router
-    // https://github.com/angular-ui/ui-router/issues/212#issuecomment-69974072
-    ngHtml2JsPreprocessor: {
-      moduleName: 'ngHtml2Js',
-      stripPrefix: 'app/' // the path must be relative to the app.js
-    },
-
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
-    // web server port
-    port: 9876,
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
   });
 };

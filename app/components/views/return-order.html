@@ -1,0 +1,110 @@
+<style>
+    ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: gray;
+    opacity: 1; /* Firefox */
+    font-size:20px;
+}
+
+</style>
+        <div class="container-fluid">
+          
+      
+          <div>
+           
+            <div class="container return-continue-button-page" id="full">
+               <div class="row product-detail">
+                <div class="col-md-6">
+                  <div class="slider">
+                    <div class="slide_viewer">
+                      <div class="slide_group">
+                        <div class="slide">
+                          <img src="{{ctrl.order.prodImg}}" />
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                 
+      
+                </div>
+                <div class="col-md-6 respon">
+                  <div class="info">
+                     <p style="font-size: 21px;"><b>{{ctrl.order.productName}}</b></p>
+                      <span class="price" style="text-transform: capitalize;">{{ctrl.order.status}}</span> 
+                  </div>
+                  <div class="desc">
+                      <p style="color:#000;">{{ctrl.order.orderDateTime | date:"EEE,dd 'th' MMM yy"}}</p>
+                      <p><br>
+                          <label style="color:black;font-size:17px;">Select image to upload:</label>
+                          <input type="file" accept="image/*" id="returnReqUpload" class="form-control" ng-click="ctrl.openImageSourceSelector()">
+                     </p>
+                  </div> 
+                  <div class="area">
+                    <textarea placeholder="product issue....." rows="14" cols="74" ng-model="ctrl.returnIssue"></textarea>
+                    <p style="color:#30bd7d;float:right;">Max 200</p>
+                  </div>
+                  <p style="color:red;"><b>{{ctrl.msgShow}}</b></p>
+                  <p style="color:green;"><b>{{ctrl.successMsg}}</b></p>
+                </div>
+              </div>  
+             <!--<div class="return">
+                     <div class="row">
+                         <div class="col-md-12">
+                           <h2>How do you want to return</h2>	
+                        <div class="contact1">
+                          <p><input type="radio"><b>Is it a residential address ?</b><br/><span class="sub">Get a self-shipping credit of Rs.100.</span></p>
+                          <p class="default"><input type="radio"><b>Make it your default address ?</b><br/><span class="sub">A reverse pick-up will take 3-5 days from the completion of this request.</span></p>
+                        </div>
+                      </div>
+                     </div> 
+             </div>-->
+             <div class="add">
+                     <!--<div class="row">
+                      <div class="col-md-6">
+                            <div class="contact">
+                              <!-- <p>Where you can find us?</p> -->
+                              <!--<div class="address">
+                                  <input type="radio" name="radio">
+                                   <p><span>Office</span><a href="#">Edit</a></p>
+                                      <address>
+                                        <b>Shekhar Hans</b><br/>
+                                        F7 42WORKS Industrial Area Phase 8<br/>
+                                        Mohali - 160055<br/>
+                                        +919992006969<br/>
+                                      </address>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                            <div class="contact">
+                             <!--  <p>Where you can find us?</p> -->
+                             <!-- <div class="address">
+                                      <input type="radio" name="radio">
+                                   <p><span>Home</span><a href="#">Edit</a></p>
+                                  <address>
+                                    <b>Shekhar Hans</b><br/>
+                                    F7 42WORKS Industrial Area Phase 8<br/>
+                                    Mohali - 160055<br/>
+                                    +919992006969<br/>
+                                  </address>
+                              </div>
+                          </div>
+                      </div>
+                      <h5><a href="add_new_address.html">+Add New Address</a></h5>
+      
+                  </div>-->
+                  <div class="row">
+                    <div class="col-md-12" style="margin-left: 40%;">
+                      <div class="btn">
+                        <a ng-click="ctrl.requestReturnOrder()">Confirm & Return</a>
+                      </div> 
+                    </div>
+                  </div>
+             </div>
+                 
+            </div>
+          </div>
+        </div>  
+        
+      
+    

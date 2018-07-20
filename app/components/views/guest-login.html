@@ -1,0 +1,51 @@
+<style>
+#header-main{
+    display: none;
+}
+#footer-main{
+    display: none;
+}
+.login-screen{
+    z-index: 9999;
+}
+</style>
+<div class="container">
+    <div class="login-screen">
+        <div class="login-pop-info">
+			<div class="login-screen-logo">
+				<img src="resources/images/login-pop-2.jpg" alt="pop-imag" />
+			</div> 
+			<p style="text-align: center;font-size: 24px;color: #f28433;font-weight: bold;">Duqhan</p>
+			<p style="text-align: center;font-size: 17px;color: #000;">Sign in to Browse the <br/> Products !</p>
+			<form class="login-screen-form" name="ctrl.loginForm" ng-submit="ctrl.login()" novalidate="" >
+				<!-- <input type="email" placeholder="Email*" >
+				<input type="password" placeholder="Password*" class="form-control"> -->
+				<div ng-hide="ctrl.buttonView">
+					<div ng-class="{ 'has-errors' : ctrl.loginForm.email.$invalid, 'no-errors' : ctrl.loginForm.email.$valid}">
+						<input class="form-control" name="email" type="email" placeholder="E-Mail" ng-model="ctrl.user.email" required="">
+					</div>
+					<div class="error-container" ng-show="ctrl.loginForm.email.$error && ctrl.loginForm.$submitted" ng-messages="ctrl.loginForm.email.$error">
+						<div ng-messages-include="error-list.html"></div>
+					</div>
+	
+					<div ng-class="{ 'has-errors' : ctrl.loginForm.password.$invalid, 'no-errors' : ctrl.loginForm.password.$valid}">
+						<i class="icon ion-ios-locked-outline placeholder-icon"></i>
+						<input class="form-control"  name="password" type="password" placeholder="Password" ng-model="ctrl.user.password" required="">
+					</div>
+					<div class="error-container" ng-show="ctrl.loginForm.password.$error && ctrl.loginForm.$submitted" ng-messages="ctrl.loginForm.password.$error">
+						<div ng-messages-include="error-list.html"></div>
+					</div>
+	
+					<div>
+						<p style="color:red;">{{ctrl.responseCB}}</p>
+					</div>
+				</div>
+				<p style="float: right;"><a ui-sref="forgot-password">Forgot Password?</a></p>
+				<button type="submit" class="login-screen-btn">Login</button>
+				<p class="login-screen-new">
+					New user?<a ui-sref="store.guest-register" style="color: #f28533;"> Register here </a>
+				</p>
+			</form>
+		</div>
+    </div>    
+</div>

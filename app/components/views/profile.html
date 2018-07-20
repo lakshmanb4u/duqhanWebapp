@@ -1,0 +1,151 @@
+<div class="container" id="full">
+    <div class="my-profile">
+        <p style="color:green;margin-left: 44%;"><b>{{ctrl.showMessage}}</b></p>
+        <div class="my-profile-bg"></div>
+      <img src="{{ctrl.user.profileImg || 'resources/images/pic.jpg'}}" onclick="document.getElementById('upload_file').click()"/>
+      <img src="resources/images/pencil.png" class="edit-icon" onclick="document.getElementById('upload_file').click()">
+      <input type="file" style="display: none;" id="upload_file">
+      <form  name="UserProfileForm" ng-submit="ctrl.updateProfileDetails()" novalidate="" >
+        <div>
+          <img src="resources/images/user.png">
+          <label>Your Name</label>
+           <i class="icon ion-ios-person-outline placeholder-icon"></i>
+          <input name="name" type="text" class="form-control" ng-model="ctrl.user.name" ng-class="{ 'has-errors' : UserProfileForm.name.$invalid}" required />  
+        </div>
+        
+        <div>
+            <img src="resources/images/email.png">
+          <label>Email</label>
+          <input name="email" type="email" class="form-control" ng-model="ctrl.user.email"  ng-class="{ 'has-errors' : UserProfileForm.email.$invalid && !UserProfileForm.email.$pristine}"  required/>
+        </div>
+        <div>
+            <img src="resources/images/phone-call.png">
+          <label>Phone</label>
+          <input name="mobile" type="number" class="form-control" ng-model="ctrl.user.mobile" ng-minlength="10" ng-maxlength="10" ng-class="{ 'has-errors' : UserProfileForm.mobile.$invalid}" required />    
+        </div>
+        <label>Gender</label>
+        <p>
+          <span class="male">
+            <input type="radio" ng-model="ctrl.user.gender" ng-value="'M'" /><label>Male</label>
+          </span>
+          <span class="female">
+            <input type="radio" ng-model="ctrl.user.gender" ng-value="'F'" /><label>Female</label>
+          </span>
+        </p>
+        <div>
+          <img src="resources/images/calendar.png" style="top:0px;">
+          <label>Date of Birth</label>
+          <input type="date" class="form-control" ng-model="ctrl.user.dob" />    
+        </div>
+        <div>
+          <label>Select Currency</label>
+          <select ng-model="ctrl.user.currencyCode">
+          <option ng-repeat="c in ctrl.countryCode" value="{{c.code}}">
+            {{c.code}}
+          </option>
+          </select>
+        </div>
+        <div ng-messages-include="error-list.html"></div>
+        <button class="button-class" ng-disabled="UserProfileForm.$invalid" type="submit">Update</button>
+      </form>
+    </div>  
+  </div>
+ 
+  <script id="error-list.html" type="text/ng-template">
+    <div class="error" ng-message="required">
+      <i class="ion-information-circled"></i> This field is required!
+    </div>
+    <div class="error" ng-message="email">
+      <i class="ion-information-circled"></i> This is not a valid email!
+    </div>
+    <div class="error" ng-message="number">
+      <i class="ion-information-circled"></i> This is not a valid mobile number!
+    </div>
+    <div class="error" ng-message="minlength maxlength">
+      <i class="ion-information-circled"></i> Mobile number should be 10 digits!
+    </div>
+  </script>
+  <style type="text/css">
+  .my-profile .edit-icon {
+    border-radius: 0%;
+    height: 31px;
+    width: 38px;
+    border: 0;
+    transform: none;
+    margin-left: 38%;
+    bottom: 36px;
+    position: relative;
+  }
+  .my-profile form img {
+    border-radius: 0%;
+    height: 22px;
+    width: 31px;
+    border: 0;
+    transform: none;
+    float: right;
+    top: 26px;
+  }
+    .css-form input.ng-invalid.ng-touched {
+      background-color: #FA787E;
+    }
+
+    .css-form input.ng-valid.ng-touched {
+      background-color: #78FA89;
+    }
+    .error-container {
+      margin: 5px 0;
+    }
+
+    .error-container:last-child {
+      margin: 5px 0 0;
+    }
+
+    .error {
+      padding: 0px 16px;
+      font-family: "Facit Light";
+      font-size: 11px;
+      color: #ef473a;
+      line-height: 14px;
+      text-align: right;
+    }
+
+    .error.server-side {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+
+    .error i {
+      font-size: 14px;
+      color: #ef473a;  
+      line-height: 14px;
+    }
+
+    .last-error-container > .error {
+      padding: 10px 16px 0;
+    }
+
+    .has-errors {
+      border-bottom: 1px solid #ef473a !important;
+    }
+
+    .no-errors {
+      border-bottom: 1px solid #000 !important;
+    }
+
+    .info-message {
+      font-family: "Facit Light";
+      font-size: 14px;
+      color: #33cd5f;
+      line-height: 14px;
+      text-align: center;
+      margin: 10px 16px;
+
+    }
+
+    .info-message i {
+      font-size: 14px;
+      color: #33cd5f;  
+      line-height: 14px;
+    }
+</style>

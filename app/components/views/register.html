@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--<title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/css/style.css">
+  <script src="bootstrap/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700" rel="stylesheet">
+
+  
+</head>-->
+<body style="background: #333333;">
+  <div class="container" id="full">
+    <div class="register-pop">
+        <div class="register-pop-info">
+            <a href="#/login"><img src="resources/images/rev.png" style="margin-top:3%;margin-left:5%;"></a>
+          <div class="register-logo">
+            <img src="resources/images/login-pop-2.jpg" alt="pop-imag" />
+          </div> 
+          <p style="text-align: center;font-size: 24px;color: #f28433;font-weight: bold;">Duqhan</p>
+          <p style="text-align: center;font-size: 22px;color: #000;">Sign in to Browse the <br/> Products !</p>
+          <form name="ctrl.signupForm" ng-submit="ctrl.signup()">
+            <input type="text" placeholder="Full name" ng-model="ctrl.user.name" class="form-control">
+            <input type="email" placeholder="Email*" ng-model="ctrl.user.email" class="form-control" required>
+            <input type="password" placeholder="Password*" ng-model="ctrl.user.password" class="form-control" required>
+            <p style="float: right;">(Min. 8 characters)</p>
+            <input type="password" placeholder="Confirm Password*" class="form-control"required>
+            <input type="number" placeholder="Mobile Number" ng-model="ctrl.user.mobile"class="form-control">
+            <p style="float: right;">(For More Updates)</p>
+            <div class="error server-side text-center m-t-md" ng-show="ctrl.responseCB && ctrl.signupForm.$submitted" style="margin-top: 13%;">
+               <b>* {{ctrl.responseCB}}</b>
+              </div>
+            <button type="submit" ng-disabled="ctrl.signupForm.$invalid" class="register-pop-btn">Sign Up</button>
+  
+          </form>
+         
+
+         
+        </div>
+    </div>    
+  </div>
+</body>
+</html>

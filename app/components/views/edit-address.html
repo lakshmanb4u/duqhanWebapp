@@ -1,0 +1,57 @@
+<div>    
+        <div class="container add-new-address" id="full">
+            <div class="row add111">
+                <div class="col-md-6">
+                    <div class="add-my-profile">
+                        <form name="addAddressForm" ng-submit="ctrl.saveAddress()" novalidate="" >
+                            <div>
+                                <label>Contact Name</label>
+                                <input type="text" class="form-control" name="contactName"  ng-model="ctrl.addressDTO.contactName" required ng-class="{ 'has-errors' : addAddressForm.contactName.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.contactName.$invalid">*required field</p>
+                            </div>
+                            <div>
+                                <label>Contact Number</label>
+                                <input class="form-control" name="contactNumber" type="number" ng-model="ctrl.addressDTO.phone" required ng-minlength="10" ng-maxlength="10" ng-class="{ 'has-errors' : addAddressForm.contactNumber.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.contactNumber.$invalid">*required field</p>
+                            </div>
+                            <div>
+                                <label>Pin Code</label>
+                                <input class="form-control" name="zipCode" type="number" ng-model="ctrl.addressDTO.zipCode" required  ng-class="{ 'has-errors' : addAddressForm.zipCode.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.zipCode.$invalid">*required field</p>
+
+                            </div>
+                            <div>
+                                <label>House No</label>
+                                <input type="number" class="form-control" name="houseNo" ng-model="ctrl.addressDTO.houseNo" required ng-class="{ 'has-errors' : addAddressForm.houseNo.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.houseNo.$invalid">*required field</p>
+                            </div>
+                            <div>
+                                <label>Street Code</label>
+                                <input type="text" class="form-control" name="streetOne" ng-model="ctrl.addressDTO.streetOne" required ng-class="{ 'has-errors' : addAddressForm.streetOne.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.streetOne.$invalid">*required field</p>
+                            </div>
+                            <div>
+                                <label>City</label>
+                                <input type="text" class="form-control" name="city" ng-model="ctrl.addressDTO.city" required ng-class="{ 'has-errors' : addAddressForm.city.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.city.$invalid">*required field</p>
+                            </div>
+                            <div>
+                                <label>State</label>
+                                <input type="text" class="form-control" name="state" ng-model="ctrl.addressDTO.state" required ng-class="{ 'has-errors' : addAddressForm.state.$invalid}" />
+                                <p style="color:red;" ng-if="addAddressForm.state.$invalid">*required field</p>
+                            </div>
+                            <button ng-disabled="addAddressForm.$invalid" type="submit">Continue</button>
+                            <button ng-click="ctrl.goBack()" type="button" class="btn">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="contact">
+                        <p style="font-size: 18px;"><input  type="checkbox" ng-model="ctrl.addressDTO.isResidential" ng-change="ctrl.setResidentialAddress(ctrl.addressDTO.isResidential)" >Is it a residential address ?</p>
+                        <p style="font-size: 18px;" class="default"><input type="checkbox" ng-model="ctrl.isDefaultAddress" ng-checked="ctrl.isDefaultAddress" ng-change="ctrl.setDefaultAddressFlag(ctrl.isDefaultAddress)">Make it your default address ?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
